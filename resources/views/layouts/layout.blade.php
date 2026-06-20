@@ -5,64 +5,78 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>@yield('title', 'Puncak & Bara | Open Trip Pendakian Gunung Profesional')</title>
     
-    <!-- Tailwind CSS CDN (v4 theme config compatible style) -->
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: 'var(--primary)',
+                        accent: 'var(--accent)',
+                        secondary: 'var(--accent-soft)',
+                    },
+                    fontFamily: {
+                        serif: ['Fraunces', 'serif'],
+                        sans: ['Outfit', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
     
     <!-- Google Fonts & Lucide Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Outfit:wght@100..900&family=Inter:wght@400;700;900&display=swap" rel="stylesheet"/>
     <script src="https://unpkg.com/lucide@latest"></script>
     
     <style>
-        /* Natural Mountain Light Theme Styles */
         :root {
-            --color-primary: #2F5233; /* Forest Green */
-            --color-primary-light: #4A7856;
-            --color-secondary: #8B6F47; /* Earth Coklat */
-            --color-accent-blue: #A8C8E0; /* Sky blue */
-            --color-accent-orange: #E8915A; /* Sunrise orange */
-            --color-bg-light: #FAFAF7;
-            --color-bg-alt: #F7F5F0;
-            --color-text-dark: #222222;
+            --primary: #1E2923; /* Deep Lichen */
+            --accent: #3D5A47; /* Moss Green */
+            --accent-soft: #A8B5AA;
+            --bg-base: #F3F2EE; /* Soft Sand */
+            --bg-glass: rgba(243, 242, 238, 0.85);
+            --border: rgba(61, 90, 71, 0.12);
         }
 
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--color-bg-light);
-            color: var(--color-text-dark);
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-base);
+            color: var(--primary);
+            cursor: none;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            letter-spacing: -0.01em;
         }
 
-        h1, h2, h3, h4, .font-serif {
-            font-family: 'Fraunces', serif;
+        /* Topography Infused Background */
+        .grid-matrix {
+            position: fixed; inset: 0;
+            background-image: 
+                radial-gradient(var(--border) 1.5px, transparent 1.5px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.6;
         }
 
-        .glass-card {
-            background: rgba(255, 255, 255, 0.45);
-            backdrop-filter: blur(24px) saturate(180%);
-            -webkit-backdrop-filter: blur(24px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            box-shadow: 0 8px 32px 0 rgba(47, 82, 51, 0.04);
+        /* Organic Glassmorphism */
+        .glass-organic {
+            background: var(--bg-glass);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--border);
         }
 
-        .glass-nav {
-            background: rgba(255, 255, 255, 0.65) !important;
-            backdrop-filter: blur(28px) saturate(190%) !important;
-            -webkit-backdrop-filter: blur(28px) saturate(190%) !important;
-            border: 1px solid rgba(255, 255, 255, 0.5) !important;
-            box-shadow: 0 10px 40px -10px rgba(47, 82, 51, 0.08) !important;
-        }
-
-        .dark-glass-card {
-            background: rgba(15, 23, 42, 0.65) !important;
-            backdrop-filter: blur(24px) saturate(180%) !important;
-            -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
-            border: 1px solid rgba(255, 255, 255, 0.1) !important;
-            box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.3) !important;
-        }
-
+        /* Evolution Reveal (Fluid) */
         .reveal {
+            opacity: 1; /* Default to visible for robustness */
+            transform: none;
+            transition: all 1.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .reveal.ready {
             opacity: 0;
             transform: translateY(30px);
-            transition: all 0.8s ease-out;
         }
 
         .reveal.active {
@@ -70,320 +84,408 @@
             transform: translateY(0);
         }
 
-        /* Custom scrollbar */
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--color-bg-alt);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--color-primary-light);
-            border-radius: 10px;
+        /* Soft Organic Cursor */
+        #cursor {
+            width: 8px; height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            position: fixed; pointer-events: none;
+            z-index: 10000;
         }
 
-        /* High-Fidelity Animations */
-        @keyframes float-slow {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-15px) rotate(1.5deg); }
-        }
-        .animate-float-slow {
-            animation: float-slow 7s ease-in-out infinite;
-        }
-
-        @keyframes float-reverse {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(15px) rotate(-1.5deg); }
-        }
-        .animate-float-reverse {
-            animation: float-reverse 8s ease-in-out infinite;
+        #cursor-follower {
+            width: 40px; height: 40px;
+            border: 1px solid var(--accent);
+            border-radius: 50%;
+            position: fixed; pointer-events: none;
+            z-index: 9999;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        @keyframes pulse-glow {
-            0%, 100% { opacity: 0.5; transform: scale(1); }
-            50% { opacity: 0.8; transform: scale(1.05); }
-        }
-        .animate-pulse-glow {
-            animation: pulse-glow 4s ease-in-out infinite;
-        }
-    </style>
-    
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#2F5233',
-                        'primary-light': '#4A7856',
-                        secondary: '#8B6F47',
-                        'accent-blue': '#A8C8E0',
-                        'accent-orange': '#E8915A',
-                        'bg-light': '#FAFAF7',
-                        'bg-alt': '#F7F5F0',
-                        'text-dark': '#222222',
-                    }
-                }
-            }
-        }
-    </script>
-</head>
-<body class="selection:bg-primary/20 selection:text-primary min-h-screen flex flex-col">
+        .cursor-hover #cursor { transform: scale(2.5); background: var(--accent); mix-blend-mode: difference; }
+        .cursor-hover #cursor-follower { transform: scale(1.5); border-color: var(--accent); opacity: 0.5; }
 
-    <!-- Storefront Navigation Shell -->
-    @php
-        $isHome = request()->is('/') || request()->is('home');
-        $isDetail = request()->is('trips/*') || request()->is('trips');
-        $hasHero = $isHome || $isDetail;
+        /* Architectural Grid & Borders */
+        .grid-line {
+            position: relative;
+        }
+        .grid-line::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: rgba(61,90,71,0.1);
+            transition: width 0.6s cubic-bezier(0.2, 0, 0, 1);
+        }
+        .reveal.active .grid-line::after {
+            width: 100%;
+        }
+
+        .reveal-child {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal-child.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 1024px) {
+            #cursor, #cursor-follower, .wa-protocol span { display: none !important; }
+            body { cursor: auto !important; }
+        }
+
+
+        /* Tactical Overlays */
+        .scanlines {
+            position: fixed; inset: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.05) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.01), rgba(0, 255, 0, 0.005), rgba(0, 0, 255, 0.01));
+            z-index: 9998; background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+        }
+        .vignette {
+            position: fixed; inset: 0;
+            background: radial-gradient(circle, transparent 50%, rgba(0,0,0,0.15) 100%);
+            z-index: 9997; pointer-events: none;
+        }
         
-        $navClass = $hasHero 
-            ? "fixed top-4 left-1/2 -translate-x-1/2 w-[92%] max-w-8xl z-50 transition-all duration-300 bg-transparent border border-transparent shadow-none py-4 px-8 md:px-12 rounded-full" 
-            : "fixed top-4 left-1/2 -translate-x-1/2 w-[92%] max-w-8xl z-50 transition-all duration-300 glass-nav py-2.5 px-8 md:px-12 rounded-full";
-        $logoTextClass = $hasHero ? "text-white" : "text-primary";
-        $logoSubTextClass = $hasHero ? "text-white/80" : "text-secondary";
-        $linkClass = $hasHero ? "text-white/80" : "text-text-dark/70";
-        $activeLinkBorder = $hasHero ? "border-white text-white" : "border-primary text-primary";
-    @endphp
+        .transition-soft { transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+        
+        /* Floating WA Protocol */
+        .wa-protocol {
+            position: fixed; bottom: 40px; right: 40px;
+            z-index: 100;
+        }
+        .wa-protocol span {
+            color: var(--accent);
+            font-weight: 800;
+        }
 
-    <nav class="{{ $navClass }}" id="main-nav" data-is-home="{{ $hasHero ? 'true' : 'false' }}">
-        <div class="flex justify-between items-center w-full">
-            <a href="{{ route('home') }}" class="flex items-center gap-2 group">
-                <div class="w-9 h-9 rounded-full bg-primary flex items-center justify-center text-white shadow-md shadow-primary/20 group-hover:scale-105 transition-transform">
-                    <i data-lucide="mountain" class="w-4.5 h-4.5"></i>
-                </div>
-                <div class="flex flex-col">
-                    <span class="font-serif text-lg font-bold tracking-tight leading-none transition-all duration-300 {{ $logoTextClass }}" id="logo-title">Puncak & Bara</span>
-                    <span class="text-[8px] tracking-widest font-sans font-bold uppercase transition-all duration-300 {{ $logoSubTextClass }}" id="logo-subtitle">Open Trip Gunung</span>
-                </div>
-            </a>
-            
-            <div class="hidden md:flex items-center space-x-6 transition-all duration-300 {{ $linkClass }}" id="nav-links">
-                <a class="text-xs font-bold tracking-wide transition-colors py-1 hover:text-primary-light {{ (request()->is('/') || request()->is('home')) ? 'border-b-2 ' . $activeLinkBorder : 'hover:text-primary' }}" href="{{ route('home') }}" data-nav="home">Beranda</a>
-                <a class="text-xs font-bold tracking-wide transition-colors py-1 hover:text-primary-light {{ request()->is('explore') ? 'border-b-2 ' . $activeLinkBorder : 'hover:text-primary' }}" href="{{ route('explore') }}" data-nav="explore">Daftar Trip</a>
-                <a class="text-xs font-bold tracking-wide transition-colors py-1 hover:text-primary-light {{ (request()->is('blog') || request()->is('blog/*')) ? 'border-b-2 ' . $activeLinkBorder : 'hover:text-primary' }}" href="{{ route('blog') }}" data-nav="blog">Artikel & Tips</a>
-                <a class="text-xs font-bold tracking-wide transition-colors py-1 hover:text-primary-light {{ request()->is('about') ? 'border-b-2 ' . $activeLinkBorder : 'hover:text-primary' }}" href="{{ route('about') }}" data-nav="about">Tentang Kami</a>
-                <a class="text-xs font-bold tracking-wide transition-colors py-1 hover:text-primary-light {{ request()->is('contact') ? 'border-b-2 ' . $activeLinkBorder : 'hover:text-primary' }}" href="{{ route('contact') }}" data-nav="contact">FAQ & Kontak</a>
+        /* Animated Architectural Grain */
+        @keyframes noise {
+            0%, 100% { transform: translate(0,0) }
+            10% { transform: translate(-5%,-10%) }
+            20% { transform: translate(-15%,5%) }
+            30% { transform: translate(7%,-25%) }
+            40% { transform: translate(-5%,25%) }
+            50% { transform: translate(-15%,10%) }
+            60% { transform: translate(15%,0) }
+            70% { transform: translate(0,15%) }
+            80% { transform: translate(3%,35%) }
+            90% { transform: translate(-10%,10%) }
+        }
+        .grain-overlay {
+            position: fixed; inset: -200%; 
+            background-image: url('https://grainy-gradients.vercel.app/noise.svg');
+            opacity: 0.05; z-index: 9999; pointer-events: none;
+            animation: noise 2s steps(4) infinite;
+        }
+
+        /* System Pulse Effect */
+        @keyframes pulse-thin {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+        #hud-coords { animation: pulse-thin 4s infinite; }
+
+        /* Minimalist Scrollbar & Smoothness */
+        html { scroll-behavior: smooth; }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: var(--bg-base); }
+        ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 0; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+
+        /* Tactical Overlays Refinement */
+        .scanlines {
+            pointer-events: none;
+            opacity: 0.1;
+        }
+
+        /* Reading Progress */
+        #reading-progress { transform-origin: left; }
+    </style>
+</head>
+<body class="selection:bg-accent selection:text-black min-h-screen flex flex-col overflow-x-hidden">
+    <div class="grain-overlay"></div>
+    <div class="scanlines"></div>
+    <div class="vignette"></div>
+    
+    <!-- Custom Cursor -->
+    <div id="cursor"></div>
+    <div id="cursor-follower"></div>
+
+
+    <!-- Reading Progress Bar -->
+    <div class="fixed top-0 left-0 h-0.5 bg-accent z-[60] transition-all duration-300 ease-out" id="reading-progress" style="width: 0%;"></div>
+
+    <!-- Floating Action -->
+    <div class="wa-protocol reveal">
+        <a href="https://wa.me/6281330012100" target="_blank" class="flex items-center gap-4 group interactive">
+            <span class="text-[9px] font-black uppercase tracking-[0.4em] text-white opacity-0 group-hover:opacity-100 transition-all">0813 3001 2100_</span>
+            <div class="w-14 h-14 border border-white/20 flex items-center justify-center bg-transparent group-hover:bg-accent group-hover:border-accent transition-all">
+                <i data-lucide="message-square" class="w-5 h-5 text-white"></i>
             </div>
-            
-            <div class="flex items-center space-x-4 transition-all duration-300 {{ $linkClass }}" id="nav-auth">
-                @if(Auth::guard('web')->check())
-                    <a href="{{ route('user.dashboard') }}" class="text-xs font-bold flex items-center gap-1.5 transition-colors hover:text-primary-light">
-                        <i data-lucide="user" class="w-3.5 h-3.5"></i> Panel
-                    </a>
-                    <a href="{{ route('logout') }}" class="text-[10px] bg-bg-alt/10 hover:bg-bg-alt/30 px-3 py-1.5 rounded-full border border-current/10 transition-colors">Keluar</a>
-                @elseif(Auth::guard('admin')->check())
-                    <a href="{{ route('admin.dashboard') }}" class="text-xs font-bold flex items-center gap-1.5 transition-colors hover:text-primary-light">
-                        <i data-lucide="layout-dashboard" class="w-3.5 h-3.5"></i> Admin
-                    </a>
-                    <a href="{{ route('logout') }}" class="text-[10px] bg-bg-alt/10 hover:bg-bg-alt/30 px-3 py-1.5 rounded-full border border-current/10 transition-colors">Keluar</a>
+        </a>
+    </div>
+
+    <!-- Floating Organic Nav -->
+    <nav id="main-nav" class="fixed top-0 left-0 w-full z-[100] glass-organic px-6 lg:px-12 h-24 flex items-center justify-between shadow-sm transition-all duration-500 flex-nowrap">
+        <div class="flex items-center gap-10 lg:gap-16 flex-nowrap">
+            <a href="{{ route('home') }}" class="group interactive shrink-0">
+                <span class="text-2xl lg:text-3xl font-serif italic text-accent whitespace-nowrap">Puncak&Bara</span>
+            </a>
+            <div class="hidden lg:flex items-center gap-10 opacity-60 flex-nowrap">
+                <a class="text-[10px] font-bold uppercase tracking-[0.3em] hover:text-accent transition-all interactive whitespace-nowrap" href="{{ route('explore') }}">Expeditions</a>
+                <a class="text-[10px] font-bold uppercase tracking-[0.3em] hover:text-accent transition-all interactive whitespace-nowrap" href="{{ route('blog') }}">Archives</a>
+                <a class="text-[10px] font-bold uppercase tracking-[0.3em] hover:text-accent transition-all interactive whitespace-nowrap" href="{{ route('blog') }}">Journal</a>
+            </div>
+        </div>
+        
+        <div class="flex items-center gap-4 lg:gap-10 shrink-0 flex-nowrap">
+            <div class="flex items-center gap-4 lg:gap-8 flex-nowrap">
+                @if(Auth::check())
+                    <a href="{{ route('user.dashboard') }}" class="text-[10px] font-bold uppercase tracking-[0.3em] border border-accent/20 px-6 lg:px-8 py-3 hover:bg-accent hover:text-white transition-all interactive whitespace-nowrap">Terminal_</a>
                 @else
-                    <a href="{{ route('login') }}" class="text-xs font-bold transition-colors hover:text-primary-light">Masuk</a>
-                    <a href="{{ route('register') }}" id="register-btn" class="bg-primary text-white px-4 py-2 rounded-full text-xs font-bold hover:scale-[1.03] active:scale-[0.98] transition-all shadow-md shadow-primary/20">Daftar</a>
+                    <a href="{{ route('login') }}" class="hidden md:block text-[10px] font-bold uppercase tracking-[0.3em] interactive text-primary hover:text-accent whitespace-nowrap">Login</a>
+                    <a href="{{ route('register') }}" class="bg-accent text-white px-6 lg:px-10 py-4 text-[10px] font-bold uppercase tracking-[0.4em] hover:bg-primary transition-all interactive shadow-xl whitespace-nowrap">Begin Journey</a>
+                @endif
+            </div>
+
+            <!-- Mobile Toggle -->
+            <button onclick="toggleMobileMenu()" class="lg:hidden w-10 h-10 flex flex-col items-center justify-center gap-1.5 interactive shrink-0">
+                <div class="w-6 h-0.5 bg-accent"></div>
+                <div class="w-6 h-0.5 bg-accent"></div>
+                <div class="w-4 h-0.5 bg-accent self-end"></div>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Drawer -->
+        <div id="mobile-menu" class="fixed inset-0 bg-[#F3F2EE] z-[200] translate-x-full transition-transform duration-700 flex flex-col p-12">
+            <div class="flex justify-between items-center mb-24">
+                <span class="text-2xl font-serif italic text-accent">Menu_</span>
+                <button onclick="toggleMobileMenu()" class="text-[10px] font-bold uppercase tracking-[0.5em] text-accent">Close_</button>
+            </div>
+            <div class="flex flex-col gap-12 mb-24">
+                <a href="{{ route('home') }}" class="text-5xl font-serif italic text-primary">Home_</a>
+                <a href="{{ route('explore') }}" class="text-5xl font-serif italic text-primary">Expeditions_</a>
+                <a href="{{ route('blog') }}" class="text-5xl font-serif italic text-primary">Archives_</a>
+                <a href="{{ route('blog') }}" class="text-5xl font-serif italic text-primary">Journal_</a>
+            </div>
+            <div class="mt-auto flex flex-col gap-6">
+                @if(Auth::guard('web')->check())
+                    <a href="{{ route('user.dashboard') }}" class="bg-accent text-white text-center py-6 text-[12px] font-bold uppercase tracking-[0.5em]">Terminal_</a>
+                @else
+                    <a href="{{ route('login') }}" class="border border-accent/20 text-center py-6 text-[12px] font-bold uppercase tracking-[0.5em]">Login_</a>
+                    <a href="{{ route('register') }}" class="bg-accent text-white text-center py-6 text-[12px] font-bold uppercase tracking-[0.5em]">Begin Journey_</a>
                 @endif
             </div>
         </div>
     </nav>
 
-    <!-- Main Content Area -->
-    <main class="flex-grow {{ $hasHero ? 'pt-0' : 'pt-24' }} page-transition">
+    <!-- Side Altitude Tracker (Nature Style) -->
+    <div class="fixed right-6 top-1/2 -translate-y-1/2 z-50 hidden 2xl:flex flex-col items-center gap-20 pointer-events-none opacity-20 transition-opacity hover:opacity-40">
+        <div class="h-32 w-px bg-accent/40"></div>
+        <div class="rotate-90 origin-center text-[10px] font-bold uppercase tracking-[0.8em] whitespace-nowrap text-accent">ELEVATION_TRACKER</div>
+        <div class="h-32 w-px bg-accent/40"></div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="flex-grow">
         @yield('content')
     </main>
 
-    <!-- Storefront Footer Shell -->
-    <footer class="bg-primary text-white/90 mt-16 border-t-4 border-secondary">
-        <div class="max-w-8xl mx-auto px-4 md:px-8 py-12">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div class="flex flex-col space-y-4">
-                    <div class="flex items-center gap-2">
-                        <div class="w-8 h-8 rounded-lg bg-white flex items-center justify-center text-primary font-bold">
-                            <i data-lucide="mountain" class="w-4 h-4"></i>
-                        </div>
-                        <span class="font-serif text-lg font-bold text-white">Puncak & Bara</span>
+    <!-- Bespoke Footer -->
+    <footer class="bg-black text-white pt-32 pb-16 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-20 pb-32 border-b border-white/5">
+                <div class="lg:col-span-6 space-y-12">
+                    <div class="space-y-4">
+                        <span class="text-[10px] font-black uppercase tracking-[0.6em] text-accent">THE MANIFESTO</span>
+                        <h2 class="text-6xl md:text-[5.5rem] font-black tracking-tighter uppercase leading-[0.8]">Architects of <br/><span class="italic font-serif font-light lowercase tracking-normal">high-altitude</span> <br/>experience.</h2>
                     </div>
-                    <p class="text-white/70 text-sm max-w-xs font-sans">
-                        Penyedia layanan open trip pendakian gunung profesional di Indonesia. Aman, terpercaya, dan bersertifikasi guide resmi.
-                    </p>
+                    <div class="flex flex-col md:flex-row gap-12 items-start md:items-center">
+                        <div class="space-y-4">
+                            <span class="text-[9px] font-black text-gray-600 uppercase tracking-[0.4em]">Direct Protocol</span>
+                            <p class="text-xl font-black italic tracking-tighter">0813 3001 2100</p>
+                        </div>
+                        <div class="w-px h-12 bg-white/10 hidden md:block"></div>
+                        <div class="space-y-2">
+                            <a href="#" class="text-[10px] font-black uppercase tracking-[0.4em] hover:text-accent transition-colors interactive">Instagram_</a>
+                            <a href="#" class="text-[10px] font-black uppercase tracking-[0.4em] hover:text-accent transition-colors interactive block">Archive.org_</a>
+                        </div>
+                    </div>
                 </div>
                 
-                <div class="flex flex-col space-y-2">
-                    <span class="text-xs font-bold text-secondary uppercase tracking-widest mb-2">Halaman Utama</span>
-                    <a class="text-white/70 hover:text-white text-sm transition-colors" href="{{ route('explore') }}">Daftar Gunung</a>
-                    <a class="text-white/70 hover:text-white text-sm transition-colors" href="{{ route('blog') }}">Artikel Tips</a>
-                    <a class="text-white/70 hover:text-white text-sm transition-colors" href="{{ route('about') }}">Tentang Kami</a>
+                <div class="lg:col-span-3 space-y-10">
+                    <h4 class="text-[9px] font-black uppercase tracking-[0.6em] text-gray-500">Navigation_Archive</h4>
+                    <ul class="space-y-4 text-[10px] font-black uppercase tracking-[0.3em]">
+                        <li><a href="{{ route('explore') }}" class="hover:text-accent transition-colors interactive">The Expeditions</a></li>
+                        <li><a href="{{ route('blog') }}" class="hover:text-accent transition-colors interactive">The Logbook</a></li>
+                        <li><a href="{{ route('about') }}" class="hover:text-accent transition-colors interactive">The Identity</a></li>
+                        <li><a href="{{ route('contact') }}" class="hover:text-accent transition-colors interactive">Contact Protocol</a></li>
+                    </ul>
                 </div>
 
-                <div class="flex flex-col space-y-2">
-                    <span class="text-xs font-bold text-secondary uppercase tracking-widest mb-2">Legalitas & Safety</span>
-                    <a class="text-white/70 hover:text-white text-sm transition-colors" href="{{ route('about') }}#legal">Sertifikasi Guide</a>
-                    <a class="text-white/70 hover:text-white text-sm transition-colors" href="{{ route('about') }}#legal">Syarat & Ketentuan</a>
-                    <a class="text-white/70 hover:text-white text-sm transition-colors" href="{{ route('contact') }}">Hubungi Kami</a>
-                </div>
-
-                <div class="flex flex-col space-y-4">
-                    <span class="text-xs font-bold text-secondary uppercase tracking-widest">Hubungi Kami</span>
-                    <div class="flex flex-col space-y-2 text-white/70 text-sm">
-                        <a href="https://wa.me/6281330012100" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-2 hover:text-white transition-colors">
-                            <i data-lucide="phone" class="w-4 h-4 text-secondary"></i>
-                            <span>WhatsApp: 0813-3001-2100</span>
-                        </a>
-                        <a href="mailto:info@puncakbara.com" class="flex items-center space-x-2 hover:text-white transition-colors">
-                            <i data-lucide="mail" class="w-4 h-4 text-secondary"></i>
-                            <span>info@puncakbara.com</span>
-                        </a>
-                    </div>
-                    <div class="flex space-x-3 mt-2">
-                        <a class="w-8 h-8 rounded-lg border border-white/20 flex items-center justify-center hover:bg-white hover:text-primary transition-all" href="#">
-                            <i data-lucide="instagram" class="w-4 h-4"></i>
-                        </a>
-                        <a class="w-8 h-8 rounded-lg border border-white/20 flex items-center justify-center hover:bg-white hover:text-primary transition-all" href="#">
-                            <i data-lucide="facebook" class="w-4 h-4"></i>
-                        </a>
+                <div class="lg:col-span-3 space-y-10">
+                    <h4 class="text-[9px] font-black uppercase tracking-[0.6em] text-gray-500">Communication</h4>
+                    <p class="text-[10px] text-gray-500 leading-relaxed font-medium">For technical briefings or logistical inquiries, contact the field team directly via encrypted channels.</p>
+                    <div class="pt-4 border-t border-white/5">
+                        <span class="text-[8px] font-black text-accent uppercase tracking-[0.8em]">MEMBER OF SANFORD ARCHIVE</span>
                     </div>
                 </div>
             </div>
             
-            <div class="mt-12 pt-6 border-t border-white/10 flex flex-col md:flex-row justify-between items-center text-xs text-white/60 font-sans">
-                <span>© 2026 Puncak & Bara by INXDVI. Hak Cipta Dilindungi.</span>
-                <div class="flex space-x-6 mt-4 md:mt-0">
-                    <span>Pemandu Berlisensi APGI</span>
-                    <span>Standard Protokol Keselamatan Tinggi</span>
+            <div class="pt-16 flex flex-col md:flex-row justify-between items-center gap-10">
+                <div class="flex flex-col gap-2">
+                    <span class="text-[9px] font-black text-gray-600 uppercase tracking-[0.5em]">&copy; 2026 PUNCAK & BARA. ALL RIGHTS RESERVED.</span>
+                    <span class="text-[8px] font-black text-gray-800 uppercase tracking-[0.3em]">EST. 2024 / INDONESIA</span>
+                </div>
+                
+                <div class="flex items-center gap-12">
+                    <div class="flex flex-col items-end">
+                        <span class="text-[8px] font-black text-gray-500 uppercase tracking-[0.4em]">Handcrafted by</span>
+                        <span class="text-[11px] font-black tracking-[0.4em] uppercase text-accent group interactive">INXDVI_</span>
+                    </div>
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- Floating WhatsApp Button -->
-    <a href="https://wa.me/6281330012100" target="_blank" rel="noopener noreferrer" class="fixed bottom-8 right-8 z-50 flex items-center justify-center w-16 h-16 bg-[#25D366] text-white rounded-full shadow-2xl hover:scale-110 hover:bg-[#20ba5a] transition-all duration-300 group" aria-label="Hubungi Kami via WhatsApp">
-        <span class="absolute right-full mr-3 py-1.5 px-3 bg-slate-900/90 backdrop-blur-sm text-white text-xs font-semibold rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap shadow-md">
-            Butuh Bantuan? Hubungi Kami
-        </span>
-        <svg class="w-8 h-8 fill-current" viewBox="0 0 24 24">
-            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.457L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.42 9.864-9.864.002-2.637-1.019-5.117-2.875-6.976C16.3 1.905 13.825.885 11.19.884c-5.441 0-9.865 4.42-9.869 9.866-.001 1.77.468 3.498 1.36 5.026l-.993 3.634 3.732-.98c1.568.854 3.292 1.302 4.933 1.302zm9.251-6.275c-.272-.137-1.614-.796-1.863-.887-.249-.09-.431-.136-.613.137-.182.273-.703.887-.862 1.069-.159.182-.318.205-.59.069-.272-.137-1.149-.424-2.19-1.355-.809-.721-1.355-1.612-1.513-1.886-.159-.273-.017-.42.119-.556.123-.122.272-.318.409-.477.137-.159.182-.273.272-.455.09-.182.046-.341-.023-.478-.069-.137-.613-1.477-.84-2.023-.22-.53-.442-.457-.613-.466-.159-.008-.341-.01-.523-.01-.182 0-.477.068-.727.341-.25.272-.954.932-.954 2.273 0 1.341.977 2.636 1.114 2.818.137.182 1.922 2.934 4.659 4.116.65.281 1.157.449 1.554.575.654.207 1.25.178 1.72.108.524-.078 1.614-.659 1.841-1.295.228-.636.228-1.182.159-1.295-.069-.114-.249-.182-.522-.319z"/>
-        </svg>
-        <span class="absolute inset-0 rounded-full bg-[#25D366] opacity-30 animate-ping z-[-1]"></span>
-    </a>
-
-    <!-- Global Scripts -->
+    <!-- Scripts -->
     <script>
-        // Initialize Lucide Icons
+        // 1. Core System: Tactical Briefing
         lucide.createIcons();
 
-        // Scroll Reveal Logic
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
+        // 2. Structural Architecture: Cursor & HUD
+        const cursor = document.getElementById('cursor');
+        const follower = document.getElementById('cursor-follower');
+        const hudCoords = document.getElementById('hud-coords');
+        const nav = document.getElementById('main-nav');
+        
+        let mouseX = 0, mouseY = 0;
+        let followerX = 0, followerY = 0;
+        let isMagnetic = false;
 
-        const observer = new IntersectionObserver((entries) => {
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            
+            if (cursor) {
+                cursor.style.left = mouseX + 'px';
+                cursor.style.top = mouseY + 'px';
+            }
+            
+            // Diagnostics: Update HUD
+            if (hudCoords) {
+                hudCoords.innerText = `${String(mouseX).padStart(4, '0')} // ${String(mouseY).padStart(4, '0')}`;
+            }
+        });
+
+        // 3. Motion Engine: Elastic Follower & Magnetic Pull
+        function animateFollower() {
+            if (follower && !isMagnetic) {
+                followerX += (mouseX - followerX) * 0.15;
+                followerY += (mouseY - followerY) * 0.15;
+                follower.style.left = (followerX - 20) + 'px';
+                follower.style.top = (followerY - 20) + 'px';
+            }
+            requestAnimationFrame(animateFollower);
+        }
+        animateFollower();
+
+        // 4. Interactive Protocol: Magnetics & Hover
+        document.querySelectorAll('.interactive').forEach(el => {
+            el.addEventListener('mouseenter', (e) => {
+                document.body.classList.add('interactive-hover');
+                // Magnetic effect
+                const bounds = el.getBoundingClientRect();
+                const centerX = bounds.left + bounds.width / 2;
+                const centerY = bounds.top + bounds.height / 2;
+                
+                isMagnetic = true;
+                if (follower) {
+                    follower.style.transition = 'all 0.5s cubic-bezier(0.23, 1, 0.32, 1)';
+                    follower.style.left = (centerX - 24) + 'px';
+                    follower.style.top = (centerY - 24) + 'px';
+                    follower.style.width = (bounds.width + 12) + 'px';
+                    follower.style.height = (bounds.height + 12) + 'px';
+                    follower.style.transform = 'translate(-6px, -6px)';
+                }
+            });
+
+            el.addEventListener('mouseleave', () => {
+                document.body.classList.remove('interactive-hover');
+                isMagnetic = false;
+                if (follower) {
+                    follower.style.transition = '';
+                    follower.style.width = '40px';
+                    follower.style.height = '40px';
+                    follower.style.transform = '';
+                }
+            });
+        });
+
+        // 5. Environmental Dynamics: Reading Progress & Reveal
+        const progressBar = document.getElementById('reading-progress');
+        
+        window.addEventListener('scroll', () => {
+            if (nav) {
+                if (window.scrollY > 20) {
+                    nav.classList.add('shadow-xl', 'h-20');
+                    nav.classList.remove('shadow-sm', 'h-24');
+                } else {
+                    nav.classList.remove('shadow-xl', 'h-20');
+                    nav.classList.add('shadow-sm', 'h-24');
+                }
+            }
+
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            if (progressBar) progressBar.style.width = scrolled + "%";
+        });
+
+        const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('active');
+                    entry.target.querySelectorAll('.reveal-child').forEach((child, i) => {
+                        setTimeout(() => child.classList.add('active'), i * 150);
+                    });
                 }
             });
-        }, observerOptions);
+        }, { threshold: 0.1 });
 
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        document.querySelectorAll('.reveal').forEach(el => {
+            el.classList.add('ready'); // Hide for animation only if JS is working
+            revealObserver.observe(el);
+        });
 
-        // Header scroll effect
-        const handleScroll = () => {
-            const nav = document.getElementById('main-nav');
-            if (!nav) return;
-            
-            const logoTitle = document.getElementById('logo-title');
-            const logoSubtitle = document.getElementById('logo-subtitle');
-            const navLinks = document.getElementById('nav-links');
-            const navAuth = document.getElementById('nav-auth');
-            
-            const isHome = nav.getAttribute('data-is-home') === 'true';
-            const scrollPos = window.scrollY || window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
-            
-            if (isHome) {
-                if (scrollPos > 20) {
-                    nav.className = "fixed top-4 left-1/2 -translate-x-1/2 w-[92%] max-w-8xl z-50 transition-all duration-300 glass-nav py-2.5 px-8 md:px-12 rounded-full";
-                    if(logoTitle) logoTitle.className = "font-serif text-lg font-bold tracking-tight leading-none transition-all duration-300 text-primary";
-                    if(logoSubtitle) logoSubtitle.className = "text-[8px] tracking-widest font-sans font-bold uppercase transition-all duration-300 text-secondary";
-                    if(navLinks) navLinks.className = "hidden md:flex items-center space-x-6 transition-all duration-300 text-text-dark/70";
-                    if(navAuth) navAuth.className = "flex items-center space-x-4 transition-all duration-300 text-text-dark/70";
-                    
-                    // Update active link borders
-                    document.querySelectorAll('[data-nav]').forEach(el => {
-                        if (el.classList.contains('border-white')) {
-                            el.classList.remove('border-white', 'text-white');
-                            el.classList.add('border-primary', 'text-primary');
-                        }
-                    });
-                } else {
-                    nav.className = "fixed top-4 left-1/2 -translate-x-1/2 w-[92%] max-w-8xl z-50 transition-all duration-300 bg-transparent border border-transparent shadow-none py-4 px-8 md:px-12 rounded-full";
-                    if(logoTitle) logoTitle.className = "font-serif text-lg font-bold tracking-tight leading-none transition-all duration-300 text-white";
-                    if(logoSubtitle) logoSubtitle.className = "text-[8px] tracking-widest font-sans font-bold uppercase transition-all duration-300 text-white/80";
-                    if(navLinks) navLinks.className = "hidden md:flex items-center space-x-6 transition-all duration-300 text-white/80";
-                    if(navAuth) navAuth.className = "flex items-center space-x-4 transition-all duration-300 text-white/80";
-                    
-                    // Update active link borders
-                    document.querySelectorAll('[data-nav]').forEach(el => {
-                        if (el.classList.contains('border-primary')) {
-                            el.classList.remove('border-primary', 'text-primary');
-                            el.classList.add('border-white', 'text-white');
-                        }
-                    });
-                }
-            } else {
-                if (scrollPos > 20) {
-                    nav.className = "fixed top-4 left-1/2 -translate-x-1/2 w-[92%] max-w-8xl z-50 transition-all duration-300 glass-nav py-2.5 px-8 md:px-12 rounded-full";
-                } else {
-                    nav.className = "fixed top-4 left-1/2 -translate-x-1/2 w-[92%] max-w-8xl z-50 transition-all duration-300 glass-nav py-3.5 px-8 md:px-12 rounded-full";
-                }
+        const mobileMenu = document.getElementById('mobile-menu');
+        function toggleMobileMenu() {
+            if (mobileMenu) {
+                mobileMenu.classList.toggle('translate-x-full');
             }
-        };
-
-        window.addEventListener('scroll', handleScroll);
-        window.addEventListener('DOMContentLoaded', handleScroll);
-
-        window.showToast = (message, type = 'success') => {
-            const container = document.getElementById('toast-container');
-            if (!container) return;
-
-            const toast = document.createElement('div');
-            toast.className = `toast-enter pointer-events-auto flex items-center gap-3 px-4 py-3 rounded-2xl shadow-xl border text-xs font-bold ${
-                type === 'success' ? 'bg-emerald-50 border-emerald-200 text-emerald-800' :
-                type === 'error' ? 'bg-rose-50 border-rose-200 text-rose-800' :
-                type === 'warning' ? 'bg-amber-50 border-amber-200 text-amber-800' :
-                'bg-slate-50 border-slate-200 text-slate-800'
-            }`;
-
-            const iconMap = {
-                success: 'check-circle',
-                error: 'alert-circle',
-                warning: 'alert-triangle',
-                info: 'info'
-            };
-
-            const iconName = iconMap[type] || 'info';
-            toast.innerHTML = `
-                <i data-lucide="${iconName}" class="w-4.5 h-4.5 shrink-0"></i>
-                <span class="flex-grow">${message}</span>
-                <button class="shrink-0 text-current/50 hover:text-current font-bold text-sm ml-2" onclick="this.parentElement.remove()">✕</button>
-            `;
-
-            container.appendChild(toast);
-            lucide.createIcons();
-
-            setTimeout(() => {
-                toast.classList.replace('toast-enter', 'toast-leave');
-                toast.addEventListener('animationend', () => toast.remove());
-            }, 4000);
-        };
-
-        // Trigger session-based alerts
-        @if(session('success'))
-            window.addEventListener('DOMContentLoaded', () => window.showToast("{{ session('success') }}", 'success'));
-        @endif
-        @if(session('error'))
-            window.addEventListener('DOMContentLoaded', () => window.showToast("{{ session('error') }}", 'error'));
-        @endif
+        }
     </script>
     
-    <!-- Global Toast Container -->
-    <div id="toast-container" class="fixed top-24 right-6 z-50 flex flex-col gap-3 max-w-sm w-full pointer-events-none"></div>
+    <!-- Tactical HUD Element -->
+    <div class="fixed top-32 left-6 z-[60] hidden 2xl:flex flex-col gap-4 opacity-15 pointer-events-none">
+        <div class="space-y-1">
+            <p class="text-[8px] font-black text-primary uppercase tracking-[0.5em]">POSITION_PROTOCOL</p>
+            <p id="hud-coords" class="text-[10px] font-black text-accent font-mono">0000 // 0000</p>
+        </div>
+        <div class="space-y-1">
+            <p class="text-[8px] font-black text-primary uppercase tracking-[0.5em]">SYSTEM_ARCHIVE</p>
+            <p class="text-[10px] font-black text-primary uppercase tracking-widest">STATE_OPERATIONAL</p>
+        </div>
+    </div>
+    
+    <div id="toast-container" class="fixed top-24 right-6 z-[60] flex flex-col gap-4 max-w-sm w-full pointer-events-none"></div>
 
     @yield('scripts')
 </body>

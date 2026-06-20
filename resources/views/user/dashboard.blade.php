@@ -1,165 +1,117 @@
 @extends('layouts.user')
 
 @section('user-content')
-<div class="space-y-8">
-    <!-- Header Banner -->
-    <div class="bg-gradient-to-br from-primary to-primary-light text-white p-6 md:p-8 rounded-3xl space-y-4 shadow-sm reveal active">
-        <h1 class="text-2xl md:text-4xl font-bold font-serif leading-tight">Halo, {{ Auth::user()->name }}!</h1>
-        <p class="text-sm text-white/95 max-w-xl">
-            Selamat datang di Panel Pendaki. Di sini Anda bisa mengelola registrasi trip gunung, mengunggah bukti transfer, dan menulis ulasan petualangan Anda.
-        </p>
+<div class="space-y-12 selection:bg-accent selection:text-black">
+    <!-- Header: Operational Overview -->
+    <div class="flex flex-col md:flex-row justify-between items-end gap-8 reveal">
+        <div class="space-y-4">
+            <span class="text-[10px] font-black uppercase tracking-[0.5em] text-accent">Strategic Overview</span>
+            <h1 class="text-6xl font-black uppercase tracking-tighter leading-none">Dashboard<span class="text-accent underline decoration-1">.</span></h1>
+        </div>
+        <div class="flex border border-black divide-x divide-black">
+            <div class="p-8 space-y-1">
+                <span class="text-[9px] font-black uppercase tracking-widest text-gray-400 block">Active Trips</span>
+                <span class="text-3xl font-black italic tracking-tighter">{{ $bookings->where('status_pembayaran', 'Lunas')->count() }}</span>
+            </div>
+            <div class="p-8 space-y-1 bg-black text-white">
+                <span class="text-[9px] font-black uppercase tracking-widest text-gray-500 block">Account Tier</span>
+                <span class="text-3xl font-black italic tracking-tighter text-accent">ELITE_</span>
+            </div>
+        </div>
     </div>
 
-    <!-- Main Grid Layout -->
-    <div class="grid grid-cols-1 xl:grid-cols-3 gap-8 items-start">
+    <!-- Layout Grid -->
+    <div class="grid grid-cols-1 xl:grid-cols-12 gap-12 items-start">
         
-        <!-- Left Side: Bookings & Notifications -->
-        <div class="xl:col-span-2 space-y-8">
-            
-            <!-- Bookings List with Filter Tabs -->
-            <div class="space-y-4 reveal active">
-                <h2 class="text-lg font-bold font-serif text-primary">Riwayat Registrasi Trip</h2>
-                
-                <!-- Filter Tabs -->
-                <div class="flex gap-4 border-b border-primary/5 pb-2">
-                    <button onclick="filterBookings('all', this)" class="booking-tab text-xs font-bold text-primary border-b-2 border-primary pb-2 focus:outline-none">
-                        Semua
-                    </button>
-                    <button onclick="filterBookings('Pending', this)" class="booking-tab text-xs font-bold text-text-dark/50 hover:text-primary pb-2 focus:outline-none">
-                        Belum Bayar
-                    </button>
-                    <button onclick="filterBookings('Terverifikasi', this)" class="booking-tab text-xs font-bold text-text-dark/50 hover:text-primary pb-2 focus:outline-none">
-                        Diverifikasi
-                    </button>
-                    <button onclick="filterBookings('Lunas', this)" class="booking-tab text-xs font-bold text-text-dark/50 hover:text-primary pb-2 focus:outline-none">
-                        Lunas
-                    </button>
+        <!-- Left: Mission Log -->
+        <div class="xl:col-span-8 space-y-12">
+            <div class="space-y-8 reveal">
+                <div class="flex items-center justify-between border-b border-gray-100 pb-8">
+                    <h2 class="text-[10px] font-black uppercase tracking-[0.4em]">Expedition Archive</h2>
+                    <div class="flex border border-black overflow-hidden">
+                        <button onclick="filterBookings('all', this)" class="booking-tab px-6 py-3 text-[9px] font-black uppercase tracking-[0.2em] bg-black text-white transition-all interactive">All_</button>
+                        <button onclick="filterBookings('Pending', this)" class="booking-tab px-6 py-3 text-[9px] font-black uppercase tracking-[0.2em] bg-white text-black hover:bg-gray-50 transition-all interactive">Pending_</button>
+                    </div>
                 </div>
 
-                <div class="overflow-x-auto bg-white rounded-2xl border border-primary/5">
-                    <table class="w-full text-left border-collapse">
-                        <thead>
-                            <tr class="border-b border-primary/10 text-[10px] font-bold uppercase tracking-wider text-text-dark/50 bg-bg-alt">
-                                <th class="p-4">Gunung / Destinasi</th>
-                                <th class="p-4">Tanggal Keberangkatan</th>
-                                <th class="p-4">Jumlah Peserta</th>
-                                <th class="p-4">Total Biaya</th>
-                                <th class="p-4">Status</th>
-                                <th class="p-4 text-right">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-primary/5 text-xs text-text-dark/75">
-                            @forelse($bookings as $booking)
-                                <tr class="booking-row transition-all hover:bg-slate-50" data-status="{{ $booking->status_pembayaran }}">
-                                    <td class="p-4">
-                                        <div class="font-bold text-primary text-sm">{{ $booking->trip->nama_gunung }}</div>
-                                        <div class="text-[9px] text-text-dark/50">{{ $booking->trip->location }}</div>
-                                    </td>
-                                    <td class="p-4">{{ $booking->trip->tanggal_berangkat->format('d M Y') }}</td>
-                                    <td class="p-4 font-bold">{{ $booking->jumlah_peserta }} Orang</td>
-                                    <td class="p-4 font-semibold text-secondary">Rp {{ number_format($booking->total_harga, 0, ',', '.') }}</td>
-                                    <td class="p-4">
-                                        @if($booking->status_pembayaran === 'Pending')
-                                            <span class="inline-block bg-amber-50 text-amber-600 border border-amber-200 px-2.5 py-0.5 rounded-full text-[10px] font-bold">
-                                                Belum Bayar
-                                            </span>
-                                        @elseif($booking->status_pembayaran === 'Terverifikasi')
-                                            <span class="inline-block bg-blue-50 text-blue-600 border border-blue-200 px-2.5 py-0.5 rounded-full text-[10px] font-bold">
-                                                Diverifikasi
-                                            </span>
-                                        @elseif($booking->status_pembayaran === 'Lunas')
-                                            <span class="inline-block bg-green-50 text-green-600 border border-green-200 px-2.5 py-0.5 rounded-full text-[10px] font-bold">
-                                                Lunas
-                                            </span>
-                                        @else
-                                            <span class="inline-block bg-red-50 text-red-600 border border-red-200 px-2.5 py-0.5 rounded-full text-[10px] font-bold">
-                                                Batal
-                                            </span>
-                                        @endif
-                                    </td>
-                                    <td class="p-4 text-right">
-                                        <div class="flex items-center justify-end gap-2">
-                                            <a href="{{ route('user.invoice', $booking->id) }}" class="text-[10px] font-bold text-primary hover:underline bg-primary/5 hover:bg-primary/10 px-2.5 py-1.5 rounded-lg transition-colors">
-                                                Invoice
-                                            </a>
-
-                                            @if($booking->status_pembayaran === 'Lunas')
-                                                <!-- Review Button Trigger -->
-                                                <button onclick="openReviewModal('{{ $booking->trip->id }}', '{{ $booking->trip->nama_gunung }}')" class="text-[10px] font-bold text-white bg-secondary hover:bg-secondary/90 px-2.5 py-1.5 rounded-lg shadow-sm btn-press">
-                                                    Ulasan
-                                                </button>
-                                            @endif
-                                        </div>
-                                    </td>
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="6" class="p-8 text-center text-text-dark/50">
-                                        Anda belum memiliki riwayat registrasi. <a href="{{ route('explore') }}" class="font-bold text-primary hover:underline">Cari trip pendakian sekarang!</a>
-                                    </td>
-                                </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
+                <div class="space-y-px bg-gray-100 border border-gray-100">
+                    @forelse($bookings as $booking)
+                        <div class="booking-row p-8 bg-white group hover:bg-gray-50 transition-all duration-500" data-status="{{ $booking->status_pembayaran }}">
+                            <div class="flex flex-col md:flex-row md:items-center justify-between gap-12">
+                                <div class="flex items-center gap-8">
+                                    <div class="w-20 h-20 bg-gray-100 overflow-hidden border border-gray-100">
+                                        <img src="{{ $booking->trip->image_url }}" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700">
+                                    </div>
+                                    <div class="space-y-2">
+                                        <h3 class="text-xl font-black uppercase tracking-tighter">{{ $booking->trip->nama_gunung }}</h3>
+                                        <p class="text-[9px] font-black text-gray-400 uppercase tracking-widest">
+                                            {{ $booking->trip->tanggal_berangkat->format('M d, Y') }} // {{ $booking->jumlah_peserta }} PAX
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-12">
+                                    <div class="text-right space-y-1">
+                                         <span class="text-lg font-black italic tracking-tighter block">IDR {{ number_format($booking->total_harga/1000, 0, ',', '.') }}K</span>
+                                         <span class="text-[8px] font-black uppercase tracking-widest {{ $booking->status_pembayaran == 'Lunas' ? 'text-accent' : 'text-amber-500' }}">
+                                            Status: {{ strtoupper($booking->status_pembayaran) }}
+                                         </span>
+                                    </div>
+                                    <a href="{{ route('user.invoice', $booking->id) }}" class="w-12 h-12 border border-black flex items-center justify-center hover:bg-black hover:text-white transition-all interactive">
+                                        <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    @empty
+                        <div class="p-32 text-center bg-white">
+                            <span class="text-[10px] font-black uppercase tracking-[0.5em] text-gray-300">No Mission Data Available</span>
+                        </div>
+                    @endforelse
                 </div>
             </div>
         </div>
 
-        <!-- Right Side: Notifications & Wishlist -->
-        <div class="space-y-6">
+        <!-- Right: Tactical Intel -->
+        <div class="xl:col-span-4 space-y-12">
             
-            <!-- Notifications List -->
-            <div class="bg-white rounded-3xl border border-primary/10 p-6 space-y-4 shadow-sm reveal active">
-                <h3 class="text-sm font-bold font-serif text-primary border-b border-primary/5 pb-2 flex items-center justify-between">
-                    <span>Pemberitahuan Pendakian</span>
-                    <span class="bg-rose-100 text-rose-600 text-[9px] font-bold px-2 py-0.5 rounded-full">2 Baru</span>
-                </h3>
-                <div class="space-y-3">
-                    <div class="flex items-start gap-3 p-3 bg-rose-50/50 rounded-2xl border border-rose-100/50 text-[10px] leading-relaxed">
-                        <i data-lucide="bell" class="w-4 h-4 text-rose-500 shrink-0 mt-0.5"></i>
-                        <div class="space-y-0.5">
-                            <p class="font-bold text-text-dark">Selesaikan Pembayaran Trip Gunung</p>
-                            <p class="text-text-dark/60">Batas waktu transfer invoice tersisa kurang dari 24 jam.</p>
-                        </div>
-                    </div>
-                    <div class="flex items-start gap-3 p-3 bg-primary/5 rounded-2xl border border-primary/5 text-[10px] leading-relaxed">
-                        <i data-lucide="check-circle" class="w-4 h-4 text-primary shrink-0 mt-0.5"></i>
-                        <div class="space-y-0.5">
-                            <p class="font-bold text-text-dark">Akun Anda Telah Terverifikasi</p>
-                            <p class="text-text-dark/60">Selamat datang! Profil Anda sekarang siap digunakan untuk registrasi SIMAKSI.</p>
+            <!-- Protocol Alerts -->
+            <div class="p-10 bg-black text-white space-y-8 reveal">
+                <div class="flex justify-between items-center border-b border-white/10 pb-6">
+                    <h3 class="text-[10px] font-black uppercase tracking-[0.4em]">Tactical Alerts</h3>
+                    <span class="w-2 h-2 bg-accent animate-pulse"></span>
+                </div>
+                <div class="space-y-6">
+                    <div class="flex gap-6 items-start p-6 bg-white/5 border border-white/10">
+                        <i data-lucide="alert-triangle" class="w-5 h-5 text-accent shrink-0"></i>
+                        <div class="space-y-2">
+                            <p class="text-[9px] font-black text-accent uppercase tracking-widest">Pending Fulfillment</p>
+                            <p class="text-gray-400 text-xs font-medium leading-relaxed">Invoice #{{ $bookings->first()?->id ?: '0000' }} requires immediate verification Sequence.</p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Wishlist Section -->
-            <div class="bg-white rounded-3xl border border-primary/10 p-6 space-y-4 shadow-sm reveal active">
-                <h3 class="text-sm font-bold font-serif text-primary border-b border-primary/5 pb-2 flex items-center gap-1.5">
-                    <i data-lucide="heart" class="w-4 h-4 text-rose-500 fill-rose-500"></i> Wishlist Gunung Impian
-                </h3>
-                <div class="space-y-3.5">
-                    <!-- Favorite item 1 -->
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl overflow-hidden shrink-0">
-                            <img src="https://images.unsplash.com/photo-1589308078059-be1415eab4c3?auto=format&fit=crop&w=150&q=80" class="w-full h-full object-cover" alt="Rinjani">
+            <!-- Archival Wishlist -->
+            <div class="p-10 border border-black space-y-8 reveal">
+                <h3 class="text-[10px] font-black uppercase tracking-[0.4em] border-b border-gray-100 pb-6">Interested Archives</h3>
+                <div class="space-y-8">
+                    @php
+                        $wishlist = [
+                            ['name' => 'Gunung Rinjani', 'loc' => 'Lombok, NTB', 'img' => 'https://images.unsplash.com/photo-1589308078059-be1415eab4c3?auto=format'],
+                            ['name' => 'Gunung Semeru', 'loc' => 'Jawa Timur', 'img' => 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format']
+                        ];
+                    @endphp
+                    @foreach($wishlist as $item)
+                        <div class="flex items-center gap-6 group interactive">
+                            <div class="w-14 h-14 bg-gray-100 overflow-hidden border border-gray-100">
+                                <img src="{{ $item['img'] }}" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700">
+                            </div>
+                            <div class="space-y-1">
+                                <h4 class="text-[10px] font-black uppercase tracking-[0.2em]">{{ $item['name'] }}</h4>
+                                <span class="text-[8px] font-bold text-gray-400 uppercase tracking-widest">{{ $item['loc'] }}</span>
+                            </div>
                         </div>
-                        <div class="flex-grow space-y-0.5">
-                            <h4 class="text-xs font-bold text-primary leading-tight">Gunung Rinjani</h4>
-                            <span class="text-[9px] text-text-dark/50 block">Lombok, NTB</span>
-                        </div>
-                        <a href="{{ route('explore', ['search' => 'Rinjani']) }}" class="text-[9px] font-bold text-secondary hover:underline shrink-0">Cari Trip</a>
-                    </div>
-                    <!-- Favorite item 2 -->
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl overflow-hidden shrink-0">
-                            <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=150&q=80" class="w-full h-full object-cover" alt="Semeru">
-                        </div>
-                        <div class="flex-grow space-y-0.5">
-                            <h4 class="text-xs font-bold text-primary leading-tight">Gunung Semeru</h4>
-                            <span class="text-[9px] text-text-dark/50 block">Lumajang, Jawa Timur</span>
-                        </div>
-                        <a href="{{ route('explore', ['search' => 'Semeru']) }}" class="text-[9px] font-bold text-secondary hover:underline shrink-0">Cari Trip</a>
-                    </div>
+                    @endforeach
                 </div>
             </div>
 
@@ -168,40 +120,41 @@
     </div>
 </div>
 
-<!-- Review Modal -->
-<div id="review-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm hidden">
-    <div class="bg-white rounded-3xl border border-primary/10 p-6 md:p-8 max-w-md w-full mx-6 space-y-6 shadow-xl relative">
-        <button onclick="closeReviewModal()" class="absolute top-4 right-4 text-text-dark/50 hover:text-red-500">
-            <i data-lucide="x" class="w-5 h-5"></i>
+<!-- Tactical Post-Expedition Report Modal -->
+<div id="review-modal" class="fixed inset-0 z-[200] flex items-center justify-center bg-black/90 hidden p-6">
+    <div class="bg-white p-12 max-w-xl w-full space-y-10 relative reveal">
+        <button onclick="closeReviewModal()" class="absolute top-8 right-8 text-gray-300 hover:text-black transition-colors interactive">
+            <i data-lucide="x" class="w-6 h-6"></i>
         </button>
  
-        <div class="space-y-1">
-            <h3 class="text-xl font-bold font-serif text-primary">Tulis Ulasan Perjalanan</h3>
-            <p id="modal-trip-name" class="text-xs text-secondary font-bold"></p>
+        <div class="space-y-4">
+            <span class="text-[10px] font-black uppercase tracking-[0.5em] text-accent">Debrief Protocol</span>
+            <h3 class="text-4xl font-black uppercase tracking-tighter">Mission Report<span class="text-accent underline">.</span></h3>
+            <p id="modal-trip-name" class="text-[10px] font-bold text-gray-400 uppercase tracking-widest"></p>
         </div>
 
-        <form id="review-form" action="" method="POST" class="space-y-4">
+        <form id="review-form" action="" method="POST" class="space-y-10">
             @csrf
             
-            <div class="flex flex-col space-y-2">
-                <label class="text-xs font-bold text-primary">Rating Anda</label>
-                <div class="flex gap-2 text-yellow-500">
+            <div class="space-y-4">
+                <label class="text-[10px] font-black uppercase tracking-widest text-gray-400">Success Rating</label>
+                <div class="flex gap-4">
                     <input type="hidden" name="rating" id="rating-input" value="5">
                     @for($i=1; $i<=5; $i++)
-                        <button type="button" onclick="setRating('{{ $i }}')" class="hover:scale-110 transition-transform">
-                            <i data-rating-star="{{ $i }}" data-lucide="star" class="w-8 h-8 fill-current"></i>
+                        <button type="button" onclick="setRating('{{ $i }}')" class="interactive group">
+                            <i data-rating-star="{{ $i }}" data-lucide="star" class="w-8 h-8 text-accent fill-current group-hover:scale-110 transition-transform"></i>
                         </button>
                     @endfor
                 </div>
             </div>
 
-            <div class="flex flex-col space-y-1">
-                <label for="komentar" class="text-xs font-bold text-primary">Komentar / Pengalaman</label>
-                <textarea id="komentar" name="komentar" rows="4" required placeholder="Tulis masukan tentang guide, porter, konsumsi, atau track..." class="px-3.5 py-2.5 rounded-xl border border-primary/10 bg-bg-light text-xs outline-none focus:ring-1 focus:ring-primary"></textarea>
+            <div class="space-y-4">
+                <label for="komentar" class="text-[10px] font-black uppercase tracking-widest text-gray-400">Expedition Summary</label>
+                <textarea id="komentar" name="komentar" rows="5" required placeholder="DOCUMENT YOUR EXPERIENCE..." class="w-full bg-gray-50 border-b-2 border-gray-100 p-4 text-xs font-bold uppercase tracking-widest outline-none focus:border-black transition-colors"></textarea>
             </div>
 
-            <button type="submit" class="w-full bg-primary hover:bg-primary-light text-white font-bold py-3 px-6 rounded-xl transition-all shadow-md text-sm btn-press">
-                Kirim Ulasan
+            <button type="submit" class="w-full bg-black text-white py-8 text-[11px] font-black uppercase tracking-[0.5em] hover:bg-accent hover:text-black transition-all interactive">
+                SUBMIT DEBRIEF_
             </button>
         </form>
     </div>
@@ -210,7 +163,6 @@
 
 @section('scripts')
 <script>
-    // 1. Booking table client filter logic
     function filterBookings(status, button) {
         document.querySelectorAll('.booking-row').forEach(row => {
             if (status === 'all' || row.getAttribute('data-status') === status) {
@@ -221,16 +173,16 @@
         });
 
         document.querySelectorAll('.booking-tab').forEach(tab => {
-            tab.className = "booking-tab text-xs font-bold text-text-dark/50 hover:text-primary pb-2 focus:outline-none";
+            tab.className = "booking-tab px-6 py-3 text-[9px] font-black uppercase tracking-[0.2em] bg-white text-black hover:bg-gray-50 transition-all interactive";
         });
-        button.className = "booking-tab text-xs font-bold text-primary border-b-2 border-primary pb-2 focus:outline-none";
+        button.className = "booking-tab px-6 py-3 text-[9px] font-black uppercase tracking-[0.2em] bg-black text-white transition-all interactive";
     }
 
-    // 2. Review modal controls
     function openReviewModal(tripId, tripName) {
         document.getElementById('modal-trip-name').innerText = tripName;
         document.getElementById('review-form').action = `/reviews/${tripId}`;
         document.getElementById('review-modal').classList.remove('hidden');
+        document.getElementById('review-modal').querySelector('.reveal').classList.add('active');
         if (window.lucide) window.lucide.createIcons();
     }
 
@@ -243,11 +195,11 @@
         for (let i = 1; i <= 5; i++) {
             const star = document.querySelector(`[data-rating-star="${i}"]`);
             if (i <= val) {
-                star.classList.add('text-yellow-500', 'fill-current');
-                star.classList.remove('text-slate-300');
+                star.classList.add('text-accent', 'fill-current');
+                star.classList.remove('text-gray-100');
             } else {
-                star.classList.remove('text-yellow-500', 'fill-current');
-                star.classList.add('text-slate-300');
+                star.classList.remove('text-accent', 'fill-current');
+                star.classList.add('text-gray-100');
             }
         }
     }

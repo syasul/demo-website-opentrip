@@ -3,89 +3,110 @@
 @section('title', 'Daftar Akun Pendaki | Puncak & Bara')
 
 @section('content')
-<section class="max-w-md mx-auto px-6 py-12">
-    <div class="glass-card rounded-3xl p-8 shadow-md space-y-6 reveal active border border-white/40 @if($errors->any()) animate-shake @endif">
-        <div class="text-center space-y-2">
-            <h1 class="text-2xl md:text-3xl font-bold font-serif text-primary">Daftar Akun Pendaki</h1>
-            <p class="text-xs text-text-dark/50">Mulai petualangan mendaki gunung dengan pendaftaran mudah.</p>
+<section class="min-h-screen flex items-stretch">
+    <!-- Image Side (Cinematic) -->
+    <div class="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-slate-950">
+        <img src="https://images.unsplash.com/photo-1574621100236-d25b64cfd6ba?auto=format&fit=crop&w=1200" 
+             class="absolute inset-0 w-full h-full object-cover opacity-80 scale-105 animate-fade-in transition-transform duration-[10000ms]" 
+             alt="Mountain Registration Background">
+        <div class="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/20 to-transparent"></div>
+        
+        <div class="relative z-10 w-full flex flex-col justify-end p-20 space-y-6">
+            <span class="text-xs font-black text-secondary uppercase tracking-[0.3em] reveal active">Next Generation Explorer</span>
+            <h2 class="text-6xl font-black font-serif text-white leading-tight reveal active" style="transition-delay: 200ms;">
+                Tulis Cerita <br>Baru Anda di <span class="text-secondary opacity-50 italic">Puncak.</span>
+            </h2>
+            <p class="text-white/40 max-w-md text-base leading-loose font-medium reveal active" style="transition-delay: 400ms;">
+                Bergabunglah dengan komunitas pendaki eksklusif kami. Dapatkan akses prioritas ke jalur-jalur legendaris dan layanan pendampingan profesional.
+            </p>
         </div>
+    </div>
 
-        @if($errors->any())
-            <div class="bg-red-50 text-red-600 p-4 rounded-2xl text-xs font-semibold border border-red-200">
-                <ul class="list-disc pl-4 space-y-1">
-                    @foreach($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
+    <!-- Form Side -->
+    <div class="w-full lg:w-1/2 flex items-center justify-center p-8 md:p-16 bg-bg-alt relative">
+        <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px] pointer-events-none"></div>
+        
+        <div class="w-full max-w-md space-y-12 relative z-10 reveal active">
+            <div class="space-y-4">
+                <a href="/" class="inline-block mb-6">
+                    <span class="text-2xl font-black font-serif text-primary lowercase tracking-tighter">puncak<span class="text-secondary">&</span>bara</span>
+                </a>
+                <h1 class="text-4xl font-black font-serif text-primary">Registrasi Pendaki</h1>
+                <p class="text-xs text-text-dark/40 font-black uppercase tracking-[0.2em]">Inisiasi perjalanan Anda hari ini.</p>
             </div>
-        @endif
 
-        <form action="{{ route('register') }}" method="POST" class="space-y-4" id="register-form" onsubmit="onSubmitRegister(event)">
-            @csrf
-            
-            <div class="flex flex-col space-y-1 reveal active stagger-1">
-                <label for="name" class="text-xs font-bold text-primary">Nama Lengkap</label>
-                <div class="flex items-center gap-2 px-3.5 py-2.5 rounded-xl border border-primary/10 bg-bg-light focus-within:ring-1 focus-within:ring-primary/20">
-                    <i data-lucide="user" class="w-4 h-4 text-text-dark/40"></i>
-                    <input type="text" id="name" name="name" value="{{ old('name') }}" required placeholder="Budi Santoso" class="bg-transparent border-0 outline-none text-sm w-full">
+            @if($errors->any())
+                <div class="bg-rose-50 border border-rose-100 p-6 rounded-[2rem] animate-shake">
+                    <ul class="space-y-2">
+                        @foreach($errors->all() as $error)
+                            <li class="text-[10px] font-black text-rose-600 uppercase tracking-widest flex items-center gap-2">
+                                <i data-lucide="alert-circle" class="w-3.5 h-3.5"></i> {{ $error }}
+                            </li>
+                        @endforeach
+                    </ul>
                 </div>
-            </div>
+            @endif
 
-            <div class="flex flex-col space-y-1 reveal active stagger-2">
-                <label for="email" class="text-xs font-bold text-primary">Alamat Email</label>
-                <div class="flex items-center gap-2 px-3.5 py-2.5 rounded-xl border border-primary/10 bg-bg-light focus-within:ring-1 focus-within:ring-primary/20">
-                    <i data-lucide="mail" class="w-4 h-4 text-text-dark/40"></i>
-                    <input type="email" id="email" name="email" value="{{ old('email') }}" required placeholder="budi@email.com" class="bg-transparent border-0 outline-none text-sm w-full">
+            <form action="{{ route('register') }}" method="POST" class="space-y-6" id="register-form" onsubmit="onSubmitRegister(event)">
+                @csrf
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="group">
+                        <label for="name" class="text-[10px] font-black text-primary/30 uppercase tracking-[0.3em] ml-6 mb-3 block group-focus-within:text-primary transition-colors">Nama Lengkap</label>
+                        <div class="flex items-center gap-4 px-8 py-4 rounded-[2.5rem] border border-primary/5 bg-white shadow-inner focus-within:ring-2 focus-within:ring-primary/5 transition-all">
+                            <input type="text" id="name" name="name" value="{{ old('name') }}" required placeholder="BUDI SANTOSO" class="bg-transparent border-0 outline-none text-[10px] font-black text-primary placeholder:text-primary/10 w-full uppercase tracking-[0.2em]">
+                        </div>
+                    </div>
+
+                    <div class="group">
+                        <label for="no_hp" class="text-[10px] font-black text-primary/30 uppercase tracking-[0.3em] ml-6 mb-3 block group-focus-within:text-primary transition-colors">WhatsApp</label>
+                        <div class="flex items-center gap-4 px-8 py-4 rounded-[2.5rem] border border-primary/5 bg-white shadow-inner focus-within:ring-2 focus-within:ring-primary/5 transition-all">
+                            <input type="text" id="no_hp" name="no_hp" value="{{ old('no_hp') }}" required placeholder="0812..." class="bg-transparent border-0 outline-none text-[10px] font-black text-primary placeholder:text-primary/10 w-full uppercase tracking-[0.2em]">
+                        </div>
+                    </div>
                 </div>
-            </div>
 
-            <div class="flex flex-col space-y-1 reveal active stagger-3">
-                <label for="no_hp" class="text-xs font-bold text-primary">Nomor WhatsApp</label>
-                <div class="flex items-center gap-2 px-3.5 py-2.5 rounded-xl border border-primary/10 bg-bg-light focus-within:ring-1 focus-within:ring-primary/20">
-                    <i data-lucide="phone" class="w-4 h-4 text-text-dark/40"></i>
-                    <input type="text" id="no_hp" name="no_hp" value="{{ old('no_hp') }}" required placeholder="0812xxxxxxxx" class="bg-transparent border-0 outline-none text-sm w-full">
+                <div class="group">
+                    <label for="email" class="text-[10px] font-black text-primary/30 uppercase tracking-[0.3em] ml-6 mb-3 block group-focus-within:text-primary transition-colors">Alamat Email</label>
+                    <div class="flex items-center gap-4 px-8 py-4 rounded-[2.5rem] border border-primary/5 bg-white shadow-inner focus-within:ring-2 focus-within:ring-primary/5 transition-all">
+                        <input type="email" id="email" name="email" value="{{ old('email') }}" required placeholder="EXPLORER@PUNCAKBARA.COM" class="bg-transparent border-0 outline-none text-[10px] font-black text-primary placeholder:text-primary/10 w-full uppercase tracking-[0.2em]">
+                    </div>
                 </div>
-            </div>
 
-            <div class="flex flex-col space-y-1 reveal active stagger-4">
-                <label for="password" class="text-xs font-bold text-primary">Kata Sandi</label>
-                <div class="flex items-center gap-2 px-3.5 py-2.5 rounded-xl border border-primary/10 bg-bg-light focus-within:ring-1 focus-within:ring-primary/20">
-                    <i data-lucide="lock" class="w-4 h-4 text-text-dark/40"></i>
-                    <input type="password" id="password" name="password" required placeholder="Minimal 8 karakter" oninput="checkPasswordStrength(this.value)" class="bg-transparent border-0 outline-none text-sm w-full">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="group">
+                        <label for="password" class="text-[10px] font-black text-primary/30 uppercase tracking-[0.3em] ml-6 mb-3 block group-focus-within:text-primary transition-colors">Password</label>
+                        <div class="flex items-center gap-4 px-8 py-4 rounded-[2.5rem] border border-primary/5 bg-white shadow-inner focus-within:ring-2 focus-within:ring-primary/5 transition-all">
+                            <input type="password" id="password" name="password" required placeholder="••••••••" oninput="checkPasswordStrength(this.value)" class="bg-transparent border-0 outline-none text-[10px] font-black text-primary placeholder:text-primary/10 w-full uppercase tracking-[0.2em]">
+                        </div>
+                    </div>
+
+                    <div class="group">
+                        <label for="password_confirmation" class="text-[10px] font-black text-primary/30 uppercase tracking-[0.3em] ml-6 mb-3 block group-focus-within:text-primary transition-colors">Konfirmasi</label>
+                        <div class="flex items-center gap-4 px-8 py-4 rounded-[2.5rem] border border-primary/5 bg-white shadow-inner focus-within:ring-2 focus-within:ring-primary/5 transition-all">
+                            <input type="password" id="password_confirmation" name="password_confirmation" required placeholder="••••••••" class="bg-transparent border-0 outline-none text-[10px] font-black text-primary placeholder:text-primary/10 w-full uppercase tracking-[0.2em]">
+                        </div>
+                    </div>
                 </div>
-                <!-- Strength bar -->
-                <div class="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden mt-1.5 hidden" id="strength-bar-container">
-                    <div class="h-full w-0 transition-all duration-300" id="strength-bar"></div>
+
+                <div class="space-y-4">
+                    <div class="flex items-start gap-4 px-4">
+                        <input type="checkbox" id="terms" required class="w-5 h-5 rounded-full border-primary/10 text-primary focus:ring-primary/20 mt-1">
+                        <label for="terms" class="text-[9px] font-black text-primary/40 leading-relaxed uppercase tracking-[0.2em] cursor-pointer">
+                            Saya menerima <a href="#" class="text-secondary hover:underline">Syarat Layanan</a> dan menyetujui <a href="#" class="text-secondary hover:underline">Protokol Keselamatan</a> Puncak & Bara.
+                        </label>
+                    </div>
                 </div>
-                <span class="text-[10px] font-bold hidden" id="strength-text"></span>
+
+                <button type="submit" id="btn-register" class="w-full bg-primary hover:bg-primary-light text-white font-black text-[10px] py-6 rounded-[2.5rem] shadow-2xl hover:scale-105 active:scale-95 transition-all uppercase tracking-[0.3em] flex items-center justify-center gap-4">
+                    <span id="btn-register-text">Daftar Akun</span>
+                    <i id="btn-register-spinner" data-lucide="loader-2" class="w-4 h-4 animate-spin hidden"></i>
+                </button>
+            </form>
+
+            <div class="text-center text-[10px] font-black text-primary/30 uppercase tracking-[0.3em] pt-8 border-t border-primary/5">
+                Sudah Bergabung? <a href="{{ route('login') }}" class="text-secondary hover:underline ml-2">Masuk Sekarang</a>
             </div>
-
-            <div class="flex flex-col space-y-1 reveal active stagger-5">
-                <label for="password_confirmation" class="text-xs font-bold text-primary">Konfirmasi Kata Sandi</label>
-                <div class="flex items-center gap-2 px-3.5 py-2.5 rounded-xl border border-primary/10 bg-bg-light focus-within:ring-1 focus-within:ring-primary/20">
-                    <i data-lucide="lock" class="w-4 h-4 text-text-dark/40"></i>
-                    <input type="password" id="password_confirmation" name="password_confirmation" required placeholder="Ketik ulang kata sandi" class="bg-transparent border-0 outline-none text-sm w-full">
-                </div>
-            </div>
-
-            <div class="flex items-start gap-2 pt-1 reveal active stagger-5">
-                <input type="checkbox" id="terms" required class="rounded border-primary/10 text-primary focus:ring-primary mt-0.5">
-                <label for="terms" class="text-xs text-text-dark/60 cursor-pointer select-none">
-                    Saya menyetujui <a href="#" onclick="event.preventDefault(); window.showToast('Syarat & Ketentuan berhasil ditampilkan!', 'info')" class="font-bold text-secondary hover:underline">Syarat & Ketentuan</a> serta Kebijakan Privasi.
-                </label>
-            </div>
-
-            <button type="submit" id="btn-register" class="w-full bg-primary hover:bg-primary-light text-white font-bold py-3 px-6 rounded-xl transition-all shadow-md shadow-primary/10 text-sm btn-press flex items-center justify-center gap-2">
-                <span id="btn-register-text">Daftar Sekarang</span>
-                <svg id="btn-register-spinner" class="animate-spin h-4 w-4 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-            </button>
-        </form>
-
-        <div class="text-center text-xs text-text-dark/50 pt-2 border-t border-primary/5">
-            Sudah punya akun? <a href="{{ route('login') }}" class="font-bold text-secondary hover:underline">Masuk</a>
         </div>
     </div>
 </section>
@@ -128,17 +149,17 @@
         }
     }
 
-    function onSubmitRegister(e) {
+        function onSubmitRegister(e) {
         const checkbox = document.getElementById('terms');
         if (!checkbox.checked) {
             e.preventDefault();
             if (window.showToast) {
-                window.showToast('Anda harus menyetujui Syarat & Ketentuan!', 'error');
+                window.showToast('Syarat & Ketentuan wajib disetujui.', 'error');
             }
             return;
         }
 
-        document.getElementById('btn-register-text').innerText = 'Mendaftar...';
+        document.getElementById('btn-register-text').innerText = 'PROSES...';
         document.getElementById('btn-register-spinner').classList.remove('hidden');
         document.getElementById('btn-register').disabled = true;
     }

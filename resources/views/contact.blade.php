@@ -1,112 +1,107 @@
 @extends('layouts.layout')
 
-@section('title', 'Hubungi Kami & FAQ | Puncak & Bara')
+@section('title', 'Communication Hub | Puncak & Bara')
 
 @section('content')
-<section class="max-w-8xl mx-auto px-4 md:px-8 py-12 space-y-16">
-    <div class="text-center space-y-4 max-w-2xl mx-auto reveal">
-        <span class="text-xs font-bold text-secondary uppercase tracking-widest">Kontak & Bantuan</span>
-        <h1 class="text-3xl md:text-5xl font-bold font-serif text-primary">Kami Siap Membantu Pendakian Anda</h1>
-        <p class="text-text-dark/65 text-sm leading-relaxed">
-            Punya pertanyaan mengenai kesiapan fisik, jadwal keberangkatan, atau butuh bantuan pendaftaran? Hubungi tim kami atau baca jawaban FAQ di bawah ini.
-        </p>
-    </div>
-
-    <!-- Contact Info Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div class="glass-card p-8 rounded-3xl shadow-sm text-center flex flex-col items-center space-y-4 reveal border border-white/40">
-            <div class="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary">
-                <i data-lucide="phone-call" class="w-6 h-6"></i>
+<!-- Typographic Header -->
+<header class="bg-black text-white pt-40 pb-24 border-b border-white/10 selection:bg-accent selection:text-black">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-12 items-end">
+            <div class="md:col-span-8 space-y-6">
+                <span class="text-[10px] font-black uppercase tracking-[0.5em] text-accent block reveal">The Inquiry Protocol</span>
+                <h1 class="text-7xl md:text-[8rem] font-black uppercase tracking-tighter leading-[0.8] reveal">
+                    Connect<span class="text-accent underline decoration-1">.</span>
+                </h1>
             </div>
-            <h3 class="text-lg font-bold font-serif text-primary">Layanan Pelanggan</h3>
-            <p class="text-xs text-text-dark/60 leading-relaxed">Hubungi admin WhatsApp untuk respon instan setiap hari pukul 08.00 - 21.00 WIB.</p>
-            <a href="https://wa.me/6281330012100" target="_blank" rel="noopener" class="text-sm font-bold text-secondary hover:underline">0813-3001-2100 (WhatsApp)</a>
-        </div>
-
-        <div class="glass-card p-8 rounded-3xl shadow-sm text-center flex flex-col items-center space-y-4 reveal border border-white/40">
-            <div class="w-12 h-12 rounded-2xl bg-secondary/10 flex items-center justify-center text-secondary">
-                <i data-lucide="mail" class="w-6 h-6"></i>
+            <div class="md:col-span-4 pb-4">
+                <p class="text-gray-500 text-sm font-medium leading-relaxed reveal">Direct communication channels established for logistical coordination, technical inquiries, and project partnerships.</p>
             </div>
-            <h3 class="text-lg font-bold font-serif text-primary">Surat Elektronik</h3>
-            <p class="text-xs text-text-dark/60 leading-relaxed">Kirim email untuk penawaran trip kelompok kustom, kerjasama media, atau sponsor.</p>
-            <a href="mailto:info@puncakbara.com" class="text-sm font-bold text-primary hover:underline">info@puncakbara.com</a>
-        </div>
-
-        <div class="glass-card p-8 rounded-3xl shadow-sm text-center flex flex-col items-center space-y-4 reveal border border-white/40">
-            <div class="w-12 h-12 rounded-2xl bg-accent-blue/15 flex items-center justify-center text-primary-light">
-                <i data-lucide="map-pin" class="w-6 h-6"></i>
-            </div>
-            <h3 class="text-lg font-bold font-serif text-primary">Basecamp Utama</h3>
-            <p class="text-xs text-text-dark/60 leading-relaxed">Silakan mampir ke kantor kami untuk konsultasi rute & sewa gear premium.</p>
-            <span class="text-sm font-bold text-text-dark">Malang, Jawa Timur</span>
         </div>
     </div>
+</header>
 
-    <!-- FAQ Accordion -->
-    <div class="max-w-4xl mx-auto space-y-8 reveal">
-        <h2 class="text-2xl md:text-3xl font-bold font-serif text-primary text-center">Tanya Jawab (FAQ)</h2>
-        
-        <div class="space-y-4">
+<section class="max-w-7xl mx-auto px-6 py-24 selection:bg-black selection:text-white">
+    <!-- Channel Grid: Architectural Bento -->
+            <div class="space-y-4">
+                <h3 class="text-[10px] font-black uppercase tracking-[0.4em]">Official Liaison</h3>
+                <p class="text-xl font-black italic tracking-tighter truncate">independenttendiyvisual@gmail.com</p>
+                <p class="text-gray-400 text-[10px] font-medium leading-relaxed">For project briefings, technical documentation, and partnership requests.</p>
+            </div>
+            <a href="mailto:independenttendiyvisual@gmail.com" class="inline-block border-b-2 border-black pb-1 text-[10px] font-black uppercase tracking-[0.3em] interactive">Transmit Email_</a>
+        </div>
+
+        <div class="p-12 space-y-8 hover:bg-gray-50 transition-colors group">
+            <div class="w-12 h-12 border border-black flex items-center justify-center group-hover:bg-black group-hover:text-white transition-all">
+                <i data-lucide="map-pin" class="w-5 h-5"></i>
+            </div>
+            <div class="space-y-4">
+                <h3 class="text-[10px] font-black uppercase tracking-[0.4em]">Physical Hub</h3>
+                <p class="text-2xl font-black italic tracking-tighter">SANFORD OPS.</p>
+                <p class="text-gray-400 text-[10px] font-medium leading-relaxed">Strategic headquarters for route planning and technical equipment verification.</p>
+            </div>
+            <span class="text-[10px] font-black uppercase tracking-[0.3em] text-accent">Location: Malang, East Java</span>
+        </div>
+    </div>
+
+    <!-- FAQ Protocol: Analytical Breakdown -->
+    <div class="mt-40 space-y-24">
+        <div class="flex flex-col md:flex-row justify-between items-end gap-8 border-b border-gray-100 pb-12 reveal">
+            <h2 class="text-5xl font-black uppercase tracking-tighter">Support Protocol<span class="text-accent underline decoration-1">.</span></h2>
+            <p class="text-gray-400 text-xs font-medium tracking-widest uppercase">Frequently Referenced Information</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-20 gap-y-12 reveal">
             <!-- FAQ 1 -->
-            <div class="glass-card rounded-2xl overflow-hidden border border-white/40">
-                <button onclick="toggleFaq(this)" class="w-full px-6 py-4 text-left flex justify-between items-center text-sm font-bold text-primary hover:bg-bg-alt/20 transition-colors focus:outline-none">
-                    <span>Apakah pendaki pemula boleh ikut open trip ini?</span>
-                    <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300"></i>
-                </button>
-                <div class="hidden px-6 pb-5 pt-1 text-xs text-text-dark/70 leading-relaxed border-t border-primary/5 bg-bg-light/40 backdrop-blur-sm">
-                    Sangat boleh! Kami memiliki beberapa trip yang dirancang khusus untuk pemula (level kesulitan "Pemula" seperti Gunung Gede atau Gunung Merbabu). Kami juga menyediakan guide berpengalaman yang akan membimbing dan mengawal ritme langkah Anda dengan sabar.
-                </div>
+            <div class="space-y-4 pb-12 border-b border-gray-50">
+                <h4 class="text-sm font-black uppercase tracking-[0.2em] flex items-center gap-4">
+                    <span class="text-accent">01_</span> Eligibility For Beginners
+                </h4>
+                <p class="text-gray-500 text-sm leading-relaxed font-medium">
+                    All participants are welcome. We curate specific expeditions categorized under "Pemula" (Beginner) to ensure controlled progression and professional guidance for first-time ascents.
+                </p>
             </div>
 
             <!-- FAQ 2 -->
-            <div class="glass-card rounded-2xl overflow-hidden border border-white/40">
-                <button onclick="toggleFaq(this)" class="w-full px-6 py-4 text-left flex justify-between items-center text-sm font-bold text-primary hover:bg-bg-alt/20 transition-colors focus:outline-none">
-                    <span>Apa saja perlengkapan yang sudah disediakan oleh panitia?</span>
-                    <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300"></i>
-                </button>
-                <div class="hidden px-6 pb-5 pt-1 text-xs text-text-dark/70 leading-relaxed border-t border-primary/5 bg-bg-light/40 backdrop-blur-sm">
-                    Panitia menyediakan perlengkapan kelompok berupa tenda dome, matras angin, sleeping bag per orang, peralatan masak kelompok, bahan logistik segar, obat-obatan P3K umum, serta perlengkapan keselamatan darurat. Anda hanya perlu membawa pakaian pribadi, jaket anti dingin, dan obat-obatan pribadi khusus.
-                </div>
+            <div class="space-y-4 pb-12 border-b border-gray-50">
+                <h4 class="text-sm font-black uppercase tracking-[0.2em] flex items-center gap-4">
+                    <span class="text-accent">02_</span> Logistical Inventory
+                </h4>
+                <p class="text-gray-500 text-sm leading-relaxed font-medium">
+                    Core infrastructure (dome tents, air mattresses, sleeping bags, culinary equipment) is managed by the Sanford team. Participants are only required to maintain technical personal apparel and specific medication.
+                </p>
             </div>
 
             <!-- FAQ 3 -->
-            <div class="glass-card rounded-2xl overflow-hidden border border-white/40">
-                <button onclick="toggleFaq(this)" class="w-full px-6 py-4 text-left flex justify-between items-center text-sm font-bold text-primary hover:bg-bg-alt/20 transition-colors focus:outline-none">
-                    <span>Bagaimana kebijakan pembatalan (refund) jika saya berhalangan hadir?</span>
-                    <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300"></i>
-                </button>
-                <div class="hidden px-6 pb-5 pt-1 text-xs text-text-dark/70 leading-relaxed border-t border-primary/5 bg-bg-light/40 backdrop-blur-sm">
-                    Pembatalan H-14 keberangkatan mendapatkan pengembalian 50% dari total biaya. Pembatalan di bawah H-7 keberangkatan dinyatakan hangus, namun Anda diperbolehkan mencari pengganti peserta (oper nama) paling lambat H-3 sebelum keberangkatan tanpa biaya tambahan.
-                </div>
+            <div class="space-y-4 pb-12 border-b border-gray-50">
+                <h4 class="text-sm font-black uppercase tracking-[0.2em] flex items-center gap-4">
+                    <span class="text-accent">03_</span> Cancellation Sequence
+                </h4>
+                <p class="text-gray-500 text-sm leading-relaxed font-medium">
+                    Financial recovery protocols allow for 50% refund at H-14. Below H-7, resource allocation is finalized. Personnel substitution is permitted up to H-3 without investigative penalties.
+                </p>
             </div>
 
             <!-- FAQ 4 -->
-            <div class="glass-card rounded-2xl overflow-hidden border border-white/40">
-                <button onclick="toggleFaq(this)" class="w-full px-6 py-4 text-left flex justify-between items-center text-sm font-bold text-primary hover:bg-bg-alt/20 transition-colors focus:outline-none">
-                    <span>Apakah porter membawakan barang-barang pribadi saya?</span>
-                    <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300"></i>
-                </button>
-                <div class="hidden px-6 pb-5 pt-1 text-xs text-text-dark/70 leading-relaxed border-t border-primary/5 bg-bg-light/40 backdrop-blur-sm">
-                    Porter kelompok yang tertera di paket hanya bertugas membawakan tenda kelompok, logistik makan, dan alat masak kelompok. Barang bawaan pribadi (carrier, pakaian pribadi, air minum pribadi) tetap menjadi tanggung jawab masing-masing peserta. Jika Anda memerlukan porter pribadi untuk membawakan tas carrier Anda, silakan hubungi admin paling lambat H-3 keberangkatan.
-                </div>
+            <div class="space-y-4 pb-12 border-b border-gray-50">
+                <h4 class="text-sm font-black uppercase tracking-[0.2em] flex items-center gap-4">
+                    <span class="text-accent">04_</span> Porter Allocation
+                </h4>
+                <p class="text-gray-500 text-sm leading-relaxed font-medium">
+                    Standardized porter support covers communal logistics and structural equipment. Personal load management (carrier/gear) remains the responsibility of the individual unless a private tactical porter is requested at H-3.
+                </p>
             </div>
         </div>
     </div>
 </section>
-@endsection
 
-@section('scripts')
-<script>
-    function toggleFaq(btn) {
-        const content = btn.nextElementSibling;
-        const icon = btn.querySelector('[data-lucide="chevron-down"]');
-        
-        content.classList.toggle('hidden');
-        if (content.classList.contains('hidden')) {
-            icon.style.transform = 'rotate(0deg)';
-        } else {
-            icon.style.transform = 'rotate(180deg)';
-        }
-    }
-</script>
+<!-- Call to Action: The Direct Line -->
+<section class="max-w-7xl mx-auto px-6 pb-40 reveal">
+    <div class="bg-black text-white p-20 flex flex-col md:flex-row justify-between items-center gap-12">
+        <div class="space-y-6">
+            <h2 class="text-5xl font-black uppercase tracking-tighter leading-none">Ready To Coordinate?</h2>
+            <p class="text-gray-500 text-sm font-medium tracking-wide">Our briefing team is standing by for your technical verification.</p>
+        </div>
+        <a href="https://wa.me/6281330012100" target="_blank" class="bg-white text-black px-12 py-8 text-[11px] font-black uppercase tracking-[0.5em] hover:bg-accent transition-all interactive">Initialize Protocol_</a>
+    </div>
+</section>
 @endsection

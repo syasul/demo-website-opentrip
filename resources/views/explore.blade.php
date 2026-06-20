@@ -1,192 +1,143 @@
 @extends('layouts.layout')
 
-@section('title', 'Cari Open Trip Pendakian Gunung | Puncak & Bara')
+@section('title', 'Expedition Journals | Sanford Archive')
 
 @section('content')
-<section class="max-w-8xl mx-auto px-4 md:px-8 py-12">
-    <div class="space-y-4 mb-10 reveal">
-        <span class="text-xs font-bold text-secondary uppercase tracking-widest">Eksplorasi Gunung</span>
-        <h1 class="text-3xl md:text-5xl font-bold font-serif text-primary">Daftar Open Trip Terjadwal</h1>
-        <p class="text-text-dark/60 max-w-xl text-sm leading-relaxed">
-            Temukan jadwal trip pendakian gunung terbaik di seluruh Nusantara dengan pilihan level kesulitan yang bervariasi.
-        </p>
-    </div>
-
-    <!-- Filter Form Shell -->
-    <div class="glass-card rounded-3xl p-6 mb-8 shadow-sm border border-white/40 reveal active">
-        <form action="{{ route('explore') }}" method="GET" class="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div class="flex flex-col space-y-1">
-                <label class="text-xs font-bold text-primary" for="search">Cari Nama Gunung</label>
-                <div class="flex items-center gap-2 px-3 py-2.5 rounded-xl border border-primary/10 bg-bg-light focus-within:ring-1 focus-within:ring-primary/20">
-                    <i data-lucide="search" class="w-4 h-4 text-text-dark/50"></i>
-                    <input type="text" id="search" name="search" value="{{ request('search') }}" placeholder="Contoh: Rinjani..." class="bg-transparent border-0 outline-none text-sm w-full">
+<div class="bg-[#F3F2EE] selection:bg-accent selection:text-white min-h-screen pt-40 pb-32">
+    
+    <!-- JOURNAL_HEADER -->
+    <div class="max-w-7xl mx-auto px-10 mb-32 border-b border-accent/10 pb-24 relative overflow-hidden">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-end relative z-10">
+            <div class="lg:col-span-8 space-y-12">
+                <div class="flex items-center gap-6">
+                    <span class="text-accent text-[10px] font-bold uppercase tracking-[1.5em] block reveal">COLLECTIVE_ARCHIVE</span>
+                    <div class="flex-grow h-px bg-accent/20"></div>
                 </div>
+                <h1 class="text-8xl lg:text-[11rem] font-serif italic text-primary leading-[0.8] reveal">
+                    Field <br/><span class="text-accent underline decoration-1">Journals.</span>
+                </h1>
             </div>
-
-            <div class="flex flex-col space-y-1">
-                <label class="text-xs font-bold text-primary" for="difficulty">Level Kesulitan</label>
-                <select id="difficulty" name="difficulty" class="px-3 py-2.5 rounded-xl border border-primary/10 bg-bg-light text-sm outline-none font-medium cursor-pointer focus:ring-1 focus:ring-primary/20">
-                    <option value="">Semua Tingkatan</option>
-                    <option value="Pemula" {{ request('difficulty') == 'Pemula' ? 'selected' : '' }}>Pemula (Mudah)</option>
-                    <option value="Menengah" {{ request('difficulty') == 'Menengah' ? 'selected' : '' }}>Menengah</option>
-                    <option value="Tinggi" {{ request('difficulty') == 'Tinggi' ? 'selected' : '' }}>Tinggi (Menantang)</option>
-                </select>
+            <div class="lg:col-span-4 pb-4 reveal">
+                <p class="text-gray-500 text-xl font-medium leading-relaxed border-l-4 border-accent pl-10">
+                    A curated repository of Indonesia's silent peaks. Each entry is a testament to the architectural soul of the wild.
+                </p>
             </div>
-
-            <div class="flex flex-col space-y-1">
-                <label class="text-xs font-bold text-primary" for="max_price">Maksimal Harga</label>
-                <div class="flex items-center gap-2 px-3 py-2.5 rounded-xl border border-primary/10 bg-bg-light focus-within:ring-1 focus-within:ring-primary/20">
-                    <span class="text-xs text-text-dark/50 font-bold">Rp</span>
-                    <input type="number" id="max_price" name="max_price" value="{{ request('max_price') }}" placeholder="Contoh: 1500000" class="bg-transparent border-0 outline-none text-sm w-full">
-                </div>
-            </div>
-
-            <div class="flex items-end">
-                <button type="submit" class="w-full bg-primary hover:bg-primary-light text-white font-bold py-3 px-6 rounded-xl transition-all shadow-md shadow-primary/10 flex items-center justify-center gap-2 btn-press">
-                    <i data-lucide="filter" class="w-4 h-4"></i> Terapkan Filter
-                </button>
-            </div>
-        </form>
-    </div>
-
-    <!-- Layout and Active Filters Bar -->
-    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
-        <div>
-            @if(request('search') || request('difficulty') || request('max_price'))
-                <div class="flex flex-wrap items-center gap-2">
-                    <span class="text-[10px] font-bold text-text-dark/40 uppercase tracking-wider">Filter Aktif:</span>
-                    @if(request('search'))
-                        <span class="bg-primary/5 border border-primary/10 px-3 py-1 rounded-full text-xs font-bold text-primary flex items-center gap-1.5">
-                            "{{ request('search') }}"
-                            <a href="{{ request()->fullUrlWithQuery(['search' => null]) }}" class="hover:text-red-500"><i data-lucide="x" class="w-3 h-3"></i></a>
-                        </span>
-                    @endif
-                    @if(request('difficulty'))
-                        <span class="bg-primary/5 border border-primary/10 px-3 py-1 rounded-full text-xs font-bold text-primary flex items-center gap-1.5">
-                            Level: {{ request('difficulty') }}
-                            <a href="{{ request()->fullUrlWithQuery(['difficulty' => null]) }}" class="hover:text-red-500"><i data-lucide="x" class="w-3 h-3"></i></a>
-                        </span>
-                    @endif
-                    @if(request('max_price'))
-                        <span class="bg-primary/5 border border-primary/10 px-3 py-1 rounded-full text-xs font-bold text-primary flex items-center gap-1.5">
-                            Max: Rp {{ number_format(request('max_price'), 0, ',', '.') }}
-                            <a href="{{ request()->fullUrlWithQuery(['max_price' => null]) }}" class="hover:text-red-500"><i data-lucide="x" class="w-3 h-3"></i></a>
-                        </span>
-                    @endif
-                    <a href="{{ route('explore') }}" class="text-xs font-bold text-rose-500 hover:underline hover:text-rose-600 transition-colors">Hapus Semua</a>
-                </div>
-            @endif
         </div>
-        
-        <div class="flex items-center gap-2 bg-slate-100 p-1 rounded-xl self-end md:self-auto shrink-0">
-            <button id="btn-grid-layout" onclick="toggleLayout('grid')" class="p-2 rounded-lg bg-primary text-white transition-all shadow-sm focus:outline-none" title="Grid View">
-                <i data-lucide="layout-grid" class="w-4 h-4"></i>
-            </button>
-            <button id="btn-list-layout" onclick="toggleLayout('list')" class="p-2 rounded-lg bg-white text-text-dark/50 hover:text-primary transition-all focus:outline-none" title="List View">
-                <i data-lucide="layout-list" class="w-4 h-4"></i>
-            </button>
+        <!-- Organic Texture Overlay -->
+        <div class="absolute right-0 top-0 h-full w-full opacity-5 pointer-events-none text-[30vw] font-serif italic text-accent flex items-center justify-end">
+            Journals
         </div>
     </div>
 
-    <!-- Trips Grid/List Container -->
-    <div id="trips-container" class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        @forelse($trips as $trip)
-            <div class="trip-card glass-card rounded-3xl overflow-hidden shadow-sm hover:shadow-lg transition-all flex flex-col reveal active">
-                <div class="image-wrapper relative h-56 shrink-0 bg-slate-100">
-                    <img src="{{ $trip->image_url ?: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800&q=80' }}" class="w-full h-full object-cover" alt="{{ $trip->nama_gunung }}">
-                    <div class="absolute top-4 left-4 bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-full text-[10px] font-extrabold text-primary border border-primary/5 shadow-md">
-                        {{ $trip->location }}
-                    </div>
-                    <div class="absolute top-4 right-4 bg-primary text-white px-3 py-1.5 rounded-full text-[10px] font-extrabold shadow-md">
-                        {{ $trip->level_kesulitan }}
-                    </div>
+    <section class="max-w-7xl mx-auto px-10">
+        <!-- ORGANIC_FILTER_STATION -->
+        <div class="glass-organic p-12 mb-24 relative z-30 shadow-2xl reveal">
+            <form action="{{ route('explore') }}" method="GET" class="grid grid-cols-1 md:grid-cols-12 gap-12">
+                <div class="md:col-span-4 space-y-4">
+                    <label class="text-[9px] font-bold uppercase tracking-[0.5em] text-accent/60">Identify_Peak</label>
+                    <input type="text" name="search" value="{{ request('search') }}" placeholder="ENTER_PEAK_NAME..." class="w-full bg-transparent border-b border-accent/20 py-4 text-sm font-bold text-primary uppercase tracking-[0.2em] outline-none focus:border-accent transition-colors">
                 </div>
-                
-                <div class="content-wrapper p-6 flex-grow flex flex-col justify-between space-y-6">
-                    <div class="space-y-3">
-                        <h3 class="text-xl font-bold font-serif text-primary hover:text-primary-light">
-                            <a href="{{ route('trips.show', $trip->slug) }}">{{ $trip->nama_gunung }}</a>
-                        </h3>
-                        <p class="text-text-dark/65 text-xs line-clamp-3 leading-relaxed">
-                            {{ $trip->deskripsi }}
-                        </p>
+                <div class="md:col-span-3 space-y-4">
+                    <label class="text-[9px] font-bold uppercase tracking-[0.5em] text-accent/60">Intensity_Flow</label>
+                    <select name="difficulty" class="w-full bg-transparent border-b border-accent/20 py-4 text-sm font-bold text-primary uppercase tracking-[0.1em] outline-none focus:border-accent transition-colors cursor-pointer appearance-none">
+                        <option value="">ALL_MODES</option>
+                        <option value="Pemula" {{ request('difficulty') == 'Pemula' ? 'selected' : '' }}>BEGINNER_PATH</option>
+                        <option value="Menengah" {{ request('difficulty') == 'Menengah' ? 'selected' : '' }}>INTERMEDIATE_LEVEL</option>
+                        <option value="Tinggi" {{ request('difficulty') == 'Tinggi' ? 'selected' : '' }}>ELITE_DESCENCE</option>
+                    </select>
+                </div>
+                <div class="md:col-span-3 space-y-4">
+                    <label class="text-[9px] font-bold uppercase tracking-[0.5em] text-accent/60">Energy_Investment</label>
+                    <select name="max_price" class="w-full bg-transparent border-b border-accent/20 py-4 text-sm font-bold text-primary uppercase tracking-[0.1em] outline-none focus:border-accent transition-colors cursor-pointer appearance-none">
+                        <option value="">ALL_BOUNDARIES</option>
+                        <option value="1000000" {{ request('max_price') == '1000000' ? 'selected' : '' }}>SUB_1M_INVEST</option>
+                        <option value="2000000" {{ request('max_price') == '2000000' ? 'selected' : '' }}>SUB_2M_INVEST</option>
+                        <option value="5000000" {{ request('max_price') == '5000000' ? 'selected' : '' }}>PREMIUM_JOURNAL</option>
+                    </select>
+                </div>
+                <div class="md:col-span-2 flex items-end">
+                    <button type="submit" class="w-full bg-[#1E2923] text-white h-16 text-[10px] font-bold uppercase tracking-[0.8em] hover:bg-accent transition-all interactive shadow-lg">
+                        Execute_
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- JOURNAL_MATRIX -->
+        <div id="archive-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16 mb-32 reveal">
+            @forelse($trips as $trip)
+                <div class="expedition-card group bg-white shadow-xl hover:shadow-2xl transition-all duration-700 reveal overflow-hidden">
+                    <div class="aspect-[4/5] overflow-hidden">
+                        <img src="{{ $trip->image_url }}" class="w-full h-full object-cover group-hover:scale-110 transition-all duration-[3000ms]">
                     </div>
                     
-                    <div class="pt-4 border-t border-primary/5 flex justify-between items-center text-xs text-text-dark/65 font-sans">
-                        <div class="flex items-center gap-1">
-                            <i data-lucide="calendar" class="w-4 h-4 text-secondary"></i>
-                            <span>{{ $trip->tanggal_berangkat->format('d M') }} - {{ $trip->tanggal_pulang->format('d M Y') }}</span>
+                    <!-- Editorial Content Overlay -->
+                    <div class="p-12 space-y-10 relative">
+                        <div class="flex justify-between items-center text-[10px] font-bold uppercase tracking-[0.4em] text-accent/50">
+                            <span>VECTOR_{{ strtoupper($trip->location) }}</span>
+                            <span>{{ $trip->level_kesulitan }}</span>
                         </div>
-                        <div class="flex items-center gap-1 font-bold text-primary">
-                            <i data-lucide="users-2" class="w-4 h-4"></i>
-                            <span>Sisa {{ $trip->sisa_kuota }} Slot</span>
+                        
+                        <h3 class="text-4xl font-serif italic text-primary leading-tight">
+                            <a href="{{ route('trips.show', $trip->slug) }}" class="interactive group-hover:text-accent transition-colors">{{ $trip->nama_gunung }}</a>
+                        </h3>
+                        
+                        <div class="pt-8 border-t border-accent/5 flex justify-between items-end">
+                            <div class="space-y-1">
+                                <span class="text-[8px] font-bold text-gray-400 uppercase tracking-widest block">DEPARTURE</span>
+                                <span class="text-xs font-bold text-primary">{{ $trip->tanggal_berangkat->format('M d, Y') }}</span>
+                            </div>
+                            <div class="text-right space-y-1">
+                                <span class="text-[8px] font-bold text-gray-400 uppercase tracking-widest block">INVESTMENT</span>
+                                <span class="text-2xl font-bold text-primary italic">IDR {{ number_format($trip->harga/1000, 0, ',', '.') }}K</span>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="flex justify-between items-center pt-2">
-                        <div class="flex flex-col">
-                            <span class="text-[9px] uppercase tracking-wider text-text-dark/50 leading-none">Harga Paket</span>
-                            <span class="text-lg font-bold text-secondary">Rp {{ number_format($trip->harga, 0, ',', '.') }}</span>
-                        </div>
-                        <a href="{{ route('trips.show', $trip->slug) }}" class="bg-primary hover:bg-primary-light text-white font-bold text-xs px-5 py-2.5 rounded-xl transition-all btn-press shadow-md shadow-primary/5">
-                            Detail Trip
+                        <a href="{{ route('trips.show', $trip->slug) }}" class="block w-full border border-accent/20 py-4 mt-8 text-center text-[9px] font-bold uppercase tracking-[0.5em] text-accent hover:bg-accent hover:text-white transition-all interactive">
+                            Open Journal_
                         </a>
                     </div>
+                    
+                    <!-- Decorative Topo Line -->
+                    <div class="absolute top-6 left-6 w-12 h-px bg-accent/20 group-hover:w-full transition-all duration-700"></div>
                 </div>
-            </div>
-        @empty
-            <div class="col-span-3 text-center py-20 bg-white rounded-3xl border border-primary/5 shadow-sm">
-                <div class="w-16 h-16 bg-bg-alt text-primary/45 rounded-full flex items-center justify-center mx-auto mb-4 animate-bounce">
-                    <i data-lucide="info" class="w-8 h-8"></i>
+            @empty
+                <div class="col-span-full py-64 text-center border-2 border-dashed border-accent/10">
+                    <span class="text-[12px] font-bold uppercase tracking-[1em] text-accent/20 italic animate-pulse">NO_JOURNALS_FOUND_IN_ARCHIVE</span>
                 </div>
-                <h3 class="text-lg font-bold font-serif text-primary">Trip Tidak Ditemukan</h3>
-                <p class="text-xs text-text-dark/50 mt-1 max-w-sm mx-auto">
-                    Tidak ada jadwal pendakian yang cocok dengan kriteria filter Anda saat ini.
-                </p>
-                <div class="mt-6">
-                    <a href="{{ route('explore') }}" class="inline-flex items-center gap-1.5 bg-primary hover:bg-primary-light text-white font-extrabold text-xs px-5 py-2.5 rounded-xl transition-all shadow-md">
-                        <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i> Reset Pencarian
-                    </a>
-                </div>
-            </div>
-        @endforelse
-    </div>
-</section>
+            @endforelse
+        </div>
+
+        <!-- JOURNAL_PAGINATION -->
+        <div class="flex justify-center pb-32">
+            {{ $trips->appends(request()->query())->links() }}
+        </div>
+    </section>
+</div>
 @endsection
 
 @section('scripts')
+<style>
+    .page-link { @apply bg-white border border-accent/10 px-8 py-4 text-[10px] font-bold uppercase tracking-[0.4em] text-accent/60 hover:bg-accent hover:text-white transition-all !important; }
+    .active .page-link { @apply bg-[#1E2923] text-white border-[#1E2923] !important; }
+</style>
 <script>
-    function toggleLayout(type) {
-        const container = document.getElementById('trips-container');
-        const cards = document.querySelectorAll('.trip-card');
-        
-        const gridBtn = document.getElementById('btn-grid-layout');
-        const listBtn = document.getElementById('btn-list-layout');
+    function setLayout(type) {
+        // Layout logic remains similar but with Nature Editorial styling
+        const container = document.getElementById('archive-container');
+        const cards = document.querySelectorAll('.expedition-card');
+        const gridBtn = document.getElementById('btn-grid');
+        const listBtn = document.getElementById('btn-list');
 
         if (type === 'list') {
-            container.className = "flex flex-col gap-6";
-            cards.forEach(card => {
-                card.className = "trip-card glass-card rounded-3xl overflow-hidden shadow-sm hover:shadow-lg transition-all flex flex-col md:flex-row reveal active";
-                card.querySelector('.image-wrapper').className = "image-wrapper relative w-full md:w-72 h-48 md:h-full shrink-0 bg-slate-100";
-                card.querySelector('.content-wrapper').className = "content-wrapper p-6 flex-grow flex flex-col justify-between space-y-4 md:space-y-0";
-            });
-            listBtn.classList.add('bg-primary', 'text-white');
-            listBtn.classList.remove('bg-white', 'text-text-dark/50');
-            gridBtn.classList.remove('bg-primary', 'text-white');
-            gridBtn.classList.add('bg-white', 'text-text-dark/50');
+            container.classList.replace('lg:grid-cols-3', 'grid-cols-1');
+            container.classList.replace('md:grid-cols-2', 'grid-cols-1');
+            cards.forEach(card => card.classList.add('lg:flex'));
         } else {
-            container.className = "grid grid-cols-1 md:grid-cols-3 gap-8";
-            cards.forEach(card => {
-                card.className = "trip-card glass-card rounded-3xl overflow-hidden shadow-sm hover:shadow-lg transition-all flex flex-col reveal active";
-                card.querySelector('.image-wrapper').className = "image-wrapper relative h-56 shrink-0 bg-slate-100";
-                card.querySelector('.content-wrapper').className = "content-wrapper p-6 flex-grow flex flex-col justify-between space-y-6";
-            });
-            gridBtn.classList.add('bg-primary', 'text-white');
-            gridBtn.classList.remove('bg-white', 'text-text-dark/50');
-            listBtn.classList.remove('bg-primary', 'text-white');
-            listBtn.classList.add('bg-white', 'text-text-dark/50');
+            container.classList.replace('grid-cols-1', 'lg:grid-cols-3');
+            container.classList.replace('grid-cols-1', 'md:grid-cols-2');
+            cards.forEach(card => card.classList.remove('lg:flex'));
         }
     }
 </script>
 @endsection
-

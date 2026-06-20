@@ -51,7 +51,7 @@ class VisitorController extends Controller
             $query->where('harga', '<=', $request->input('max_price'));
         }
 
-        $trips = $query->orderBy('tanggal_berangkat', 'asc')->get();
+        $trips = $query->orderBy('tanggal_berangkat', 'asc')->paginate(9);
 
         return view('explore', compact('trips'));
     }
