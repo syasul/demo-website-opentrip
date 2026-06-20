@@ -56,9 +56,16 @@
                                             Status: {{ strtoupper($booking->status_pembayaran) }}
                                          </span>
                                     </div>
-                                    <a href="{{ route('user.invoice', $booking->id) }}" class="w-12 h-12 border border-black flex items-center justify-center hover:bg-black hover:text-white transition-all interactive">
+                                     <div class="flex gap-4 items-center">
+                                         @if($booking->status_pembayaran == 'Lunas')
+                                             <button onclick="openReviewModal('{{ $booking->trip->id }}', '{{ $booking->trip->nama_gunung }}')" class="px-6 py-3 border border-black hover:bg-accent hover:border-accent hover:text-white text-[9px] font-black uppercase tracking-[0.2em] transition-all interactive">
+                                                 Debrief_
+                                             </button>
+                                         @endif
+                                         <a href="{{ route('user.invoice', $booking->id) }}" class="w-12 h-12 border border-black flex items-center justify-center hover:bg-black hover:text-white transition-all interactive">
                                         <i data-lucide="arrow-right" class="w-5 h-5"></i>
                                     </a>
+                                 </div>
                                 </div>
                             </div>
                         </div>

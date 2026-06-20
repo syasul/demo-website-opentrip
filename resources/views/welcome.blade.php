@@ -116,19 +116,34 @@
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-16">
                 @foreach($trips->take(3) as $trip)
-                    <div class="group relative bg-white overflow-hidden shadow-xl reveal">
-                        <div class="aspect-[3/4] overflow-hidden">
-                            <img src="{{ $trip->image_url }}" class="w-full h-full object-cover group-hover:scale-110 transition-all duration-[3000ms]">
-                        </div>
-                        <div class="p-12 space-y-8 bg-white relative z-10 transition-transform group-hover:-translate-y-4">
-                            <div class="flex justify-between items-center text-[10px] font-bold uppercase tracking-widest text-accent/60">
-                                <span>{{ $trip->location }}</span>
-                                <span>{{ $trip->level_kesulitan }}</span>
+                    <div class="group relative bg-white border border-accent/5 overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.03)] hover:shadow-[0_30px_60px_rgba(30,41,35,0.06)] hover:-translate-y-2 transition-all duration-700 reveal">
+                        <div class="aspect-[3/4] overflow-hidden relative">
+                            <img src="{{ $trip->image_url }}" class="w-full h-full object-cover group-hover:scale-105 transition-all duration-[3000ms]">
+                            <div class="absolute bottom-6 right-6 z-10">
+                                <span class="bg-black/40 backdrop-blur-md border border-white/10 px-3 py-1.5 text-[9px] font-black uppercase tracking-widest text-white">
+                                    {{ number_format($trip->ketinggian ?? 3142) }}M ASL
+                                </span>
                             </div>
-                            <h3 class="text-3xl font-serif italic text-primary">{{ $trip->nama_gunung }}</h3>
-                            <div class="pt-8 border-t border-accent/5 flex justify-between items-center">
-                                <span class="text-xl font-bold text-primary">IDR {{ number_format($trip->harga/1000, 0, ',', '.') }}K</span>
-                                <a href="{{ route('trips.show', $trip->slug) }}" class="text-accent text-[11px] font-bold uppercase tracking-widest interactive">Journal_</a>
+                        </div>
+                        <div class="p-10 space-y-6 bg-white relative z-10">
+                            <div class="flex justify-between items-center text-[9px] font-black uppercase tracking-widest text-accent/60">
+                                <span>{{ $trip->location }}</span>
+                                <span class="flex items-center gap-1.5">
+                                    <span class="w-1.5 h-1.5 rounded-full {{ strtolower($trip->level_kesulitan) == 'easy' ? 'bg-emerald-500' : (strtolower($trip->level_kesulitan) == 'medium' ? 'bg-amber-500' : 'bg-red-500') }}"></span>
+                                    {{ $trip->level_kesulitan }}
+                                </span>
+                            </div>
+                            <h3 class="text-2xl font-serif italic text-primary leading-snug">
+                                <a href="{{ route('trips.show', $trip->slug) }}" class="interactive group-hover:text-accent transition-colors relative inline-block">
+                                    {{ $trip->nama_gunung }}
+                                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-500 group-hover:w-full"></span>
+                                </a>
+                            </h3>
+                            <div class="pt-6 border-t border-accent/5 flex justify-between items-center">
+                                <span class="text-lg font-bold text-primary italic">IDR {{ number_format($trip->harga/1000, 0, ',', '.') }}K</span>
+                                <a href="{{ route('trips.show', $trip->slug) }}" class="text-accent text-[9px] font-black uppercase tracking-[0.2em] interactive flex items-center gap-2 group-hover:gap-3 transition-all duration-300">
+                                    Journal_ <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                                </a>
                             </div>
                         </div>
                     </div>

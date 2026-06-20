@@ -79,6 +79,11 @@
                         <div class="flex items-center gap-4 px-8 py-4 rounded-[2.5rem] border border-primary/5 bg-white shadow-inner focus-within:ring-2 focus-within:ring-primary/5 transition-all">
                             <input type="password" id="password" name="password" required placeholder="••••••••" oninput="checkPasswordStrength(this.value)" class="bg-transparent border-0 outline-none text-[10px] font-black text-primary placeholder:text-primary/10 w-full uppercase tracking-[0.2em]">
                         </div>
+                        <!-- Strength Indicator -->
+                        <div id="strength-bar-container" class="hidden mt-3 h-1.5 bg-gray-200/50 rounded-full overflow-hidden mx-6">
+                            <div id="strength-bar" class="h-full bg-rose-500 w-0 transition-all duration-500"></div>
+                        </div>
+                        <p id="strength-text" class="hidden mt-2 mx-6 text-[10px] font-bold uppercase tracking-wider text-rose-500"></p>
                     </div>
 
                     <div class="group">

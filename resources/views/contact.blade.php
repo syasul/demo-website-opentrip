@@ -22,6 +22,12 @@
 
 <section class="max-w-7xl mx-auto px-6 py-24 selection:bg-black selection:text-white">
     <!-- Channel Grid: Architectural Bento -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-gray-200 border border-gray-200 reveal">
+        <!-- Card 1 -->
+        <div class="p-12 space-y-8 hover:bg-gray-50 transition-colors group bg-white">
+            <div class="w-12 h-12 border border-black flex items-center justify-center group-hover:bg-black group-hover:text-white transition-all">
+                <i data-lucide="mail" class="w-5 h-5"></i>
+            </div>
             <div class="space-y-4">
                 <h3 class="text-[10px] font-black uppercase tracking-[0.4em]">Official Liaison</h3>
                 <p class="text-xl font-black italic tracking-tighter truncate">independenttendiyvisual@gmail.com</p>
@@ -30,7 +36,8 @@
             <a href="mailto:independenttendiyvisual@gmail.com" class="inline-block border-b-2 border-black pb-1 text-[10px] font-black uppercase tracking-[0.3em] interactive">Transmit Email_</a>
         </div>
 
-        <div class="p-12 space-y-8 hover:bg-gray-50 transition-colors group">
+        <!-- Card 2 -->
+        <div class="p-12 space-y-8 hover:bg-gray-50 transition-colors group bg-white">
             <div class="w-12 h-12 border border-black flex items-center justify-center group-hover:bg-black group-hover:text-white transition-all">
                 <i data-lucide="map-pin" class="w-5 h-5"></i>
             </div>
@@ -40,6 +47,19 @@
                 <p class="text-gray-400 text-[10px] font-medium leading-relaxed">Strategic headquarters for route planning and technical equipment verification.</p>
             </div>
             <span class="text-[10px] font-black uppercase tracking-[0.3em] text-accent">Location: Malang, East Java</span>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="p-12 space-y-8 hover:bg-gray-50 transition-colors group bg-white">
+            <div class="w-12 h-12 border border-black flex items-center justify-center group-hover:bg-black group-hover:text-white transition-all">
+                <i data-lucide="phone" class="w-5 h-5"></i>
+            </div>
+            <div class="space-y-4">
+                <h3 class="text-[10px] font-black uppercase tracking-[0.4em]">Direct Hotline</h3>
+                <p class="text-xl font-black italic tracking-tighter truncate">0813-3001-2100</p>
+                <p class="text-gray-400 text-[10px] font-medium leading-relaxed">For quick updates on logistics, schedule adjustment, and field operations.</p>
+            </div>
+            <a href="https://wa.me/6281330012100" target="_blank" class="inline-block border-b-2 border-black pb-1 text-[10px] font-black uppercase tracking-[0.3em] interactive">Contact WhatsApp_</a>
         </div>
     </div>
 

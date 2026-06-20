@@ -73,12 +73,16 @@
 
         .reveal { opacity: 0; transform: translateY(30px); transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 1024px) {
+            .custom-cursor, .custom-cursor-follower { display: none !important; }
+            * { cursor: auto !important; }
+        }
     </style>
 </head>
 <body class="bg-white min-h-screen flex flex-col selection:bg-accent selection:text-black">
     <div class="grain-overlay"></div>
     <div class="custom-cursor"></div>
-    <div class="custom-cursor-follower"></div>
 
     <!-- Navigation Hub Protocol -->
     <nav class="bg-black text-white border-b border-white/5 sticky top-0 z-[100]">
@@ -191,56 +195,12 @@
         });
 
         function animateFollower() {
-            followerX += (mouseX - followerX) * 0.15;
-            followerY += (mouseY - followerY) * 0.15;
-            follower.style.left = (followerX - 20) + 'px';
-            follower.style.top = (followerY - 20) + 'px';
-            requestAnimationFrame(animateFollower);
-        }
-        animateFollower();
-
-        document.querySelectorAll('.interactive').forEach(el => {
-            el.addEventListener('mouseenter', () => document.body.classList.add('interactive-hover'));
-            el.addEventListener('mouseleave', () => document.body.classList.remove('interactive-hover'));
-        });
-    </script>
-    @yield('scripts')
-</body>
-</html>
-
-    <script>
-        lucide.createIcons();
-        
-        // Reveal Logic
-        const observerOptions = { threshold: 0.1 };
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-        // Interactive Cursor Protocol
-        const cursor = document.querySelector('.custom-cursor');
-        const follower = document.querySelector('.custom-cursor-follower');
-        let mouseX = 0, mouseY = 0;
-        let followerX = 0, followerY = 0;
-
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            cursor.style.left = mouseX + 'px';
-            cursor.style.top = mouseY + 'px';
-        });
-
-        function animateFollower() {
-            followerX += (mouseX - followerX) * 0.15;
-            followerY += (mouseY - followerY) * 0.15;
-            follower.style.left = (followerX - 20) + 'px';
-            follower.style.top = (followerY - 20) + 'px';
+            if (follower) {
+                followerX += (mouseX - followerX) * 0.15;
+                followerY += (mouseY - followerY) * 0.15;
+                follower.style.left = (followerX - 20) + 'px';
+                follower.style.top = (followerY - 20) + 'px';
+            }
             requestAnimationFrame(animateFollower);
         }
         animateFollower();

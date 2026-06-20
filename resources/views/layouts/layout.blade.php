@@ -216,7 +216,6 @@
     
     <!-- Custom Cursor -->
     <div id="cursor"></div>
-    <div id="cursor-follower"></div>
 
 
     <!-- Reading Progress Bar -->
@@ -248,10 +247,10 @@
         <div class="flex items-center gap-4 lg:gap-10 shrink-0 flex-nowrap">
             <div class="flex items-center gap-4 lg:gap-8 flex-nowrap">
                 @if(Auth::check())
-                    <a href="{{ route('user.dashboard') }}" class="text-[10px] font-bold uppercase tracking-[0.3em] border border-accent/20 px-6 lg:px-8 py-3 hover:bg-accent hover:text-white transition-all interactive whitespace-nowrap">Terminal_</a>
+                    <a href="{{ route('user.dashboard') }}" class="hidden sm:block text-[10px] font-bold uppercase tracking-[0.3em] border border-accent/20 px-6 lg:px-8 py-3 hover:bg-accent hover:text-white transition-all interactive whitespace-nowrap">Terminal_</a>
                 @else
                     <a href="{{ route('login') }}" class="hidden md:block text-[10px] font-bold uppercase tracking-[0.3em] interactive text-primary hover:text-accent whitespace-nowrap">Login</a>
-                    <a href="{{ route('register') }}" class="bg-accent text-white px-6 lg:px-10 py-4 text-[10px] font-bold uppercase tracking-[0.4em] hover:bg-primary transition-all interactive shadow-xl whitespace-nowrap">Begin Journey</a>
+                    <a href="{{ route('register') }}" class="hidden sm:block bg-accent text-white px-6 lg:px-10 py-4 text-[10px] font-bold uppercase tracking-[0.4em] hover:bg-primary transition-all interactive shadow-xl whitespace-nowrap">Begin Journey</a>
                 @endif
             </div>
 
@@ -262,29 +261,29 @@
                 <div class="w-4 h-0.5 bg-accent self-end"></div>
             </button>
         </div>
-
-        <!-- Mobile Menu Drawer -->
-        <div id="mobile-menu" class="fixed inset-0 bg-[#F3F2EE] z-[200] translate-x-full transition-transform duration-700 flex flex-col p-12">
-            <div class="flex justify-between items-center mb-24">
-                <span class="text-2xl font-serif italic text-accent">Menu_</span>
-                <button onclick="toggleMobileMenu()" class="text-[10px] font-bold uppercase tracking-[0.5em] text-accent">Close_</button>
-            </div>
-            <div class="flex flex-col gap-12 mb-24">
-                <a href="{{ route('home') }}" class="text-5xl font-serif italic text-primary">Home_</a>
-                <a href="{{ route('explore') }}" class="text-5xl font-serif italic text-primary">Expeditions_</a>
-                <a href="{{ route('blog') }}" class="text-5xl font-serif italic text-primary">Archives_</a>
-                <a href="{{ route('blog') }}" class="text-5xl font-serif italic text-primary">Journal_</a>
-            </div>
-            <div class="mt-auto flex flex-col gap-6">
-                @if(Auth::guard('web')->check())
-                    <a href="{{ route('user.dashboard') }}" class="bg-accent text-white text-center py-6 text-[12px] font-bold uppercase tracking-[0.5em]">Terminal_</a>
-                @else
-                    <a href="{{ route('login') }}" class="border border-accent/20 text-center py-6 text-[12px] font-bold uppercase tracking-[0.5em]">Login_</a>
-                    <a href="{{ route('register') }}" class="bg-accent text-white text-center py-6 text-[12px] font-bold uppercase tracking-[0.5em]">Begin Journey_</a>
-                @endif
-            </div>
-        </div>
     </nav>
+
+    <!-- Mobile Menu Drawer -->
+    <div id="mobile-menu" class="fixed inset-0 z-[200] translate-x-full transition-transform duration-700 flex flex-col p-12" style="background-color: rgba(243, 242, 238, 0.98); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border-left: 1px solid rgba(16, 185, 129, 0.1);">
+        <div class="flex justify-between items-center mb-24">
+            <span class="text-2xl font-serif italic text-accent">Menu_</span>
+            <button onclick="toggleMobileMenu()" class="text-[10px] font-bold uppercase tracking-[0.5em] text-accent">Close_</button>
+        </div>
+        <div class="flex flex-col gap-12 mb-24">
+            <a href="{{ route('home') }}" class="text-5xl font-serif italic text-primary">Home_</a>
+            <a href="{{ route('explore') }}" class="text-5xl font-serif italic text-primary">Expeditions_</a>
+            <a href="{{ route('blog') }}" class="text-5xl font-serif italic text-primary">Archives_</a>
+            <a href="{{ route('blog') }}" class="text-5xl font-serif italic text-primary">Journal_</a>
+        </div>
+        <div class="mt-auto flex flex-col gap-6">
+            @if(Auth::guard('web')->check())
+                <a href="{{ route('user.dashboard') }}" class="bg-accent text-white text-center py-6 text-[12px] font-bold uppercase tracking-[0.5em]">Terminal_</a>
+            @else
+                <a href="{{ route('login') }}" class="border border-accent/20 text-center py-6 text-[12px] font-bold uppercase tracking-[0.5em]">Login_</a>
+                <a href="{{ route('register') }}" class="bg-accent text-white text-center py-6 text-[12px] font-bold uppercase tracking-[0.5em]">Begin Journey_</a>
+            @endif
+        </div>
+    </div>
 
     <!-- Side Altitude Tracker (Nature Style) -->
     <div class="fixed right-6 top-1/2 -translate-y-1/2 z-50 hidden 2xl:flex flex-col items-center gap-20 pointer-events-none opacity-20 transition-opacity hover:opacity-40">

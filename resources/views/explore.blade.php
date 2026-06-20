@@ -66,40 +66,63 @@
         <!-- JOURNAL_MATRIX -->
         <div id="archive-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16 mb-32 reveal">
             @forelse($trips as $trip)
-                <div class="expedition-card group bg-white shadow-xl hover:shadow-2xl transition-all duration-700 reveal overflow-hidden">
-                    <div class="aspect-[4/5] overflow-hidden">
-                        <img src="{{ $trip->image_url }}" class="w-full h-full object-cover group-hover:scale-110 transition-all duration-[3000ms]">
+                <div class="expedition-card group bg-white border border-accent/5 shadow-[0_8px_30px_rgb(0,0,0,0.03)] hover:shadow-[0_30px_60px_rgba(30,41,35,0.06)] hover:-translate-y-2 transition-all duration-700 reveal overflow-hidden flex flex-col justify-between">
+                    <div>
+                        <!-- Image Container with height scale and custom specs tag overlay -->
+                        <div class="aspect-[4/5] overflow-hidden relative">
+                            <img src="{{ $trip->image_url }}" class="w-full h-full object-cover group-hover:scale-105 transition-all duration-[3000ms]">
+                            
+                            <!-- Premium floating badges overlay -->
+                            <div class="absolute top-6 left-6 z-10 flex flex-col gap-2">
+                                <span class="bg-[#F3F2EE]/90 backdrop-blur-md border border-accent/10 px-3 py-1.5 text-[8px] font-black uppercase tracking-widest text-primary flex items-center gap-1.5">
+                                    <span class="w-1 h-1 rounded-full bg-accent animate-ping"></span>
+                                    <span>active_node</span>
+                                </span>
+                            </div>
+
+                            <div class="absolute bottom-6 right-6 z-10">
+                                <span class="bg-black/40 backdrop-blur-md border border-white/10 px-3 py-1.5 text-[9px] font-black uppercase tracking-widest text-white">
+                                    {{ number_format($trip->ketinggian ?? 3142) }}M ASL
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <!-- Editorial Content -->
+                        <div class="p-10 space-y-8 relative">
+                            <div class="flex justify-between items-center text-[9px] font-black uppercase tracking-[0.25em]">
+                                <span class="text-accent/60">VECTOR_{{ strtoupper($trip->location) }}</span>
+                                <span class="flex items-center gap-2 text-primary/75">
+                                    <span class="w-1.5 h-1.5 rounded-full {{ strtolower($trip->level_kesulitan) == 'easy' ? 'bg-emerald-500' : (strtolower($trip->level_kesulitan) == 'medium' ? 'bg-amber-500' : 'bg-red-500') }}"></span>
+                                    {{ $trip->level_kesulitan }}
+                                </span>
+                            </div>
+                            
+                            <h3 class="text-3xl font-serif italic text-primary leading-tight">
+                                <a href="{{ route('trips.show', $trip->slug) }}" class="interactive group-hover:text-accent transition-colors relative inline-block">
+                                    {{ $trip->nama_gunung }}
+                                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-500 group-hover:w-full"></span>
+                                </a>
+                            </h3>
+                            
+                            <div class="pt-6 border-t border-accent/10 flex justify-between items-end">
+                                <div class="space-y-1">
+                                    <span class="text-[8px] font-black text-gray-400 uppercase tracking-widest block">DEPARTURE</span>
+                                    <span class="text-xs font-black text-primary">{{ $trip->tanggal_berangkat->format('M d, Y') }}</span>
+                                </div>
+                                <div class="text-right space-y-1">
+                                    <span class="text-[8px] font-black text-gray-400 uppercase tracking-widest block">INVESTMENT</span>
+                                    <span class="text-xl font-black text-primary italic">IDR {{ number_format($trip->harga/1000, 0, ',', '.') }}K</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
-                    <!-- Editorial Content Overlay -->
-                    <div class="p-12 space-y-10 relative">
-                        <div class="flex justify-between items-center text-[10px] font-bold uppercase tracking-[0.4em] text-accent/50">
-                            <span>VECTOR_{{ strtoupper($trip->location) }}</span>
-                            <span>{{ $trip->level_kesulitan }}</span>
-                        </div>
-                        
-                        <h3 class="text-4xl font-serif italic text-primary leading-tight">
-                            <a href="{{ route('trips.show', $trip->slug) }}" class="interactive group-hover:text-accent transition-colors">{{ $trip->nama_gunung }}</a>
-                        </h3>
-                        
-                        <div class="pt-8 border-t border-accent/5 flex justify-between items-end">
-                            <div class="space-y-1">
-                                <span class="text-[8px] font-bold text-gray-400 uppercase tracking-widest block">DEPARTURE</span>
-                                <span class="text-xs font-bold text-primary">{{ $trip->tanggal_berangkat->format('M d, Y') }}</span>
-                            </div>
-                            <div class="text-right space-y-1">
-                                <span class="text-[8px] font-bold text-gray-400 uppercase tracking-widest block">INVESTMENT</span>
-                                <span class="text-2xl font-bold text-primary italic">IDR {{ number_format($trip->harga/1000, 0, ',', '.') }}K</span>
-                            </div>
-                        </div>
-
-                        <a href="{{ route('trips.show', $trip->slug) }}" class="block w-full border border-accent/20 py-4 mt-8 text-center text-[9px] font-bold uppercase tracking-[0.5em] text-accent hover:bg-accent hover:text-white transition-all interactive">
+                    <!-- Clean CTA Button -->
+                    <div class="p-10 pt-0">
+                        <a href="{{ route('trips.show', $trip->slug) }}" class="block w-full border border-accent/20 py-4.5 text-center text-[9px] font-black uppercase tracking-[0.4em] text-accent hover:bg-accent hover:text-white transition-all interactive">
                             Open Journal_
                         </a>
                     </div>
-                    
-                    <!-- Decorative Topo Line -->
-                    <div class="absolute top-6 left-6 w-12 h-px bg-accent/20 group-hover:w-full transition-all duration-700"></div>
                 </div>
             @empty
                 <div class="col-span-full py-64 text-center border-2 border-dashed border-accent/10">
