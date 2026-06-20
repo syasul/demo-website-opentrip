@@ -12,33 +12,33 @@
             <div class="absolute inset-0 bg-gradient-to-t from-[#F3F2EE] via-transparent to-black/20"></div>
         </div>
 
-        <div class="max-w-7xl mx-auto px-10 relative z-10 w-full pb-32">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-20 items-end">
-                <div class="lg:col-span-8 space-y-12 reveal">
+        <div class="max-w-7xl mx-auto px-6 lg:px-10 relative z-10 w-full pb-20 lg:pb-32">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-end">
+                <div class="lg:col-span-8 space-y-8 lg:space-y-12 reveal">
                     <div class="flex items-center gap-6">
                         <span class="text-white text-[10px] font-bold uppercase tracking-[1.5em] block">MOUNT_SPEC_ARCHIVE</span>
                         <div class="flex-grow h-px bg-white/20"></div>
                     </div>
-                    <h1 class="text-8xl lg:text-[14rem] font-serif italic text-primary leading-[0.75] tracking-tight">
+                    <h1 class="text-6xl md:text-9xl lg:text-[14rem] font-serif italic text-primary leading-[0.75] tracking-tight">
                         {{ $trip->nama_gunung }}<span class="text-accent underline decoration-1">.</span>
                     </h1>
                 </div>
-                <div class="lg:col-span-4 glass-organic p-12 space-y-10 reveal shadow-2xl">
+                <div class="lg:col-span-4 glass-organic p-8 lg:p-12 space-y-8 lg:space-y-10 reveal shadow-2xl">
                     <div class="space-y-2">
                         <span class="text-[9px] font-bold uppercase tracking-widest text-accent block">CURRENT_VALUATION</span>
-                        <span class="text-5xl font-bold text-primary italic tracking-tighter">IDR {{ number_format($trip->harga/1000, 0, ',', '.') }}K</span>
+                        <span class="text-4xl lg:text-5xl font-bold text-primary italic tracking-tighter">IDR {{ number_format($trip->harga/1000, 0, ',', '.') }}K</span>
                     </div>
-                    <div class="grid grid-cols-2 gap-10 pt-10 border-t border-accent/10">
+                    <div class="grid grid-cols-2 gap-8 lg:gap-10 pt-8 lg:pt-10 border-t border-accent/10">
                         <div class="space-y-1">
-                            <span class="text-[8px] font-bold uppercase tracking-widest text-gray-400">STABILITY_LV</span>
+                            <span class="text-[8px] font-bold uppercase tracking-widest text-primary/40">STABILITY_LV</span>
                             <span class="text-sm font-bold text-primary uppercase tracking-widest">{{ $trip->level_kesulitan }}</span>
                         </div>
                         <div class="space-y-1 text-right">
-                            <span class="text-[8px] font-bold uppercase tracking-widest text-gray-400">ELEVATION</span>
+                            <span class="text-[8px] font-bold uppercase tracking-widest text-primary/40">ELEVATION</span>
                             <span class="text-sm font-bold text-primary uppercase tracking-widest">{{ number_format($trip->ketinggian ?? 3676) }}M</span>
                         </div>
                     </div>
-                    <a href="{{ route('user.booking.form', $trip->slug) }}" class="block w-full bg-accent text-white text-center py-6 text-[11px] font-bold uppercase tracking-[0.5em] hover:bg-primary transition-all interactive shadow-lg">
+                    <a href="{{ route('user.booking.form', $trip->slug) }}" class="block w-full bg-accent text-white text-center py-5 lg:py-6 text-[11px] font-bold uppercase tracking-[0.5em] hover:bg-primary transition-all interactive shadow-lg">
                         Initiate Journey_
                     </a>
                 </div>

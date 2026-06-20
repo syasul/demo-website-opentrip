@@ -9,26 +9,26 @@
     <div class="absolute inset-0 z-0 pointer-events-none opacity-[0.03]" style="background-image: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');"></div>
 
     <!-- NATURE_HERO_SPLIT -->
-    <section class="relative min-h-screen flex flex-col justify-center px-10 lg:px-40 pt-24 overflow-hidden">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-20 items-center">
+    <section class="relative min-h-screen flex flex-col justify-center px-6 lg:px-40 pt-32 lg:pt-24 overflow-hidden">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
             
-            <div class="lg:col-span-6 space-y-12 relative z-10">
+            <div class="lg:col-span-6 space-y-8 lg:space-y-12 relative z-10">
                 <div class="space-y-6 reveal">
                     <div class="flex items-center gap-6">
-                        <span class="text-[10px] font-black text-accent uppercase tracking-[1.5em]">FIELD_JOURNAL_V1</span>
+                        <span class="text-[10px] font-black text-accent uppercase tracking-[1.5em] whitespace-nowrap">FIELD_JOURNAL_V1</span>
                         <div class="flex-grow h-px bg-accent/20"></div>
                     </div>
-                    <h1 class="text-7xl lg:text-[10rem] font-serif italic text-primary leading-[0.85] tracking-tight reveal-child">
+                    <h1 class="text-6xl md:text-8xl lg:text-[10rem] font-serif italic text-primary leading-[0.85] tracking-tight reveal-child">
                          Nature <br/>is the <span class="text-accent underline decoration-1">Master.</span>
                     </h1>
                 </div>
 
-                <div class="max-w-xl space-y-10 reveal">
-                    <p class="text-primary/70 text-xl leading-relaxed font-medium">
+                <div class="max-w-xl space-y-8 lg:space-y-10 reveal">
+                    <p class="text-primary/70 text-lg lg:text-xl leading-relaxed font-medium">
                         Welcome to Puncak & Bara. We curate high-altitude archives and organic expeditions designed for those who seek the silent architecture of the wild.
                     </p>
-                    <div class="flex gap-10">
-                        <a href="{{ route('explore') }}" class="bg-accent text-white px-16 py-6 text-[11px] font-bold uppercase tracking-[0.4em] hover:bg-primary transition-all interactive shadow-xl">
+                    <div class="flex flex-wrap gap-6 lg:gap-10">
+                        <a href="{{ route('explore') }}" class="bg-accent text-white px-10 lg:px-16 py-5 lg:py-6 text-[11px] font-bold uppercase tracking-[0.4em] hover:bg-primary transition-all interactive shadow-xl">
                             Explore Archives
                         </a>
                         <div class="flex flex-col justify-center gap-1">
@@ -40,21 +40,20 @@
             </div>
 
             <!-- ORGANIC_IMAGE_ASSET -->
-            <div class="lg:col-span-6 relative h-[800px] reveal">
-                <div class="absolute inset-10 border border-accent/10 -translate-x-10 translate-y-10"></div>
+            <div class="lg:col-span-6 relative h-[500px] lg:h-[800px] reveal">
+                <div class="absolute inset-4 lg:inset-10 border border-accent/10 -translate-x-4 lg:-translate-x-10 translate-y-4 lg:translate-y-10"></div>
                 <div class="relative w-full h-full overflow-hidden shadow-2xl">
                     <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80" 
                          class="w-full h-full object-cover brightness-95 contrast-110 active-zoom">
                     <div class="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent"></div>
                     
                     <!-- Altitude Tag -->
-                    <div class="absolute bottom-16 left-16 glass-organic p-10 space-y-1">
+                    <div class="absolute bottom-10 lg:bottom-16 left-10 lg:left-16 glass-organic p-6 lg:p-10 space-y-1">
                         <span class="text-[9px] font-bold text-accent uppercase tracking-widest block">CURRENT_ELEVATION</span>
-                        <span class="text-3xl font-serif italic text-primary">3,676m_</span>
+                        <span class="text-2xl lg:text-3xl font-serif italic text-primary">3,676m_</span>
                     </div>
                 </div>
             </div>
-
         </div>
     </section>
 

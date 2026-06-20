@@ -6,19 +6,19 @@
 <div class="bg-[#F3F2EE] selection:bg-accent selection:text-white min-h-screen pt-40 pb-32">
     
     <!-- JOURNAL_HEADER -->
-    <div class="max-w-7xl mx-auto px-10 mb-32 border-b border-accent/10 pb-24 relative overflow-hidden">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-end relative z-10">
-            <div class="lg:col-span-8 space-y-12">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 mb-20 lg:mb-32 border-b border-accent/10 pb-16 lg:pb-24 relative overflow-hidden">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-end relative z-10">
+            <div class="lg:col-span-8 space-y-8 lg:space-y-12">
                 <div class="flex items-center gap-6">
                     <span class="text-accent text-[10px] font-bold uppercase tracking-[1.5em] block reveal">COLLECTIVE_ARCHIVE</span>
                     <div class="flex-grow h-px bg-accent/20"></div>
                 </div>
-                <h1 class="text-8xl lg:text-[11rem] font-serif italic text-primary leading-[0.8] reveal">
+                <h1 class="text-6xl md:text-8xl lg:text-[11rem] font-serif italic text-primary leading-[0.8] reveal">
                     Field <br/><span class="text-accent underline decoration-1">Journals.</span>
                 </h1>
             </div>
             <div class="lg:col-span-4 pb-4 reveal">
-                <p class="text-gray-500 text-xl font-medium leading-relaxed border-l-4 border-accent pl-10">
+                <p class="text-primary/60 text-lg lg:text-xl font-medium leading-relaxed border-l-4 border-accent pl-10">
                     A curated repository of Indonesia's silent peaks. Each entry is a testament to the architectural soul of the wild.
                 </p>
             </div>
