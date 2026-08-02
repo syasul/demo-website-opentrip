@@ -4,8 +4,8 @@
 @source '../../storage/framework/views/*.php';
 
 @theme {
-    --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
-    --font-serif: 'Fraunces', ui-serif, Georgia, serif;
+    --font-sans: 'Poppins', ui-sans-serif, system-ui, sans-serif;
+    --font-serif: 'Poppins', ui-serif, Georgia, serif;
     
     --color-primary: #1b3c22;
     --color-primary-light: #2d6a4f;
